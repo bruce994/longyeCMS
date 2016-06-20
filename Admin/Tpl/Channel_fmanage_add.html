@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$Think.config.SITENAME}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="__PUBLIC__/misc/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="__PUBLIC__/misc/ionicons.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="__PUBLIC__/plugins/select2/select2.min.css">
+
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="__PUBLIC__/misc/html5shiv.min.js"></script>
+        <script src="__PUBLIC__/misc/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      .color-palette {
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+      }
+      .color-palette-set {
+        margin-bottom: 15px;
+      }
+      .color-palette span {
+        display: none;
+        font-size: 12px;
+      }
+      .color-palette:hover span {
+        display: block;
+      }
+      .color-palette-box h4 {
+        position: absolute;
+        top: 100%;
+        left: 25px;
+        margin-top: -40px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+        display: block;
+        z-index: 7;
+      }
+    </style>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <include file="Public:head" />
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            字段管理
+            <small>添加</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="#">字段管理</a></li>
+            <li class="active">添加</li>
+          </ol>
+        </section>
+
+ <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <!-- form start -->
+                <form role="form" method="post" id="form1" action="{:U("Channel/fmanage_insert")}" class="pageForm required-validate">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label>频道名称</label>
+                      <select name="chid" class="form-control select2">
+                          <?php 
+                            $tmp = M("Channeltype")->field("id,typename")->select();
+                            foreach($tmp as $v){
+                              $select = '';
+                              if($v['id'] == $_GET['chid']){
+                                $select = 'selected';
+                              }
+                              echo '<option value="'.$v['id'].'" '.$select.'> '.$v['typename'].'</option>';
+                            }
+                          ?>                      
+                      </select>
+                    </div>
+
+
+
+
+                  <!-- radio -->
+                  <div class="form-group">
+                     <label>字段类型</label>
+                     <br/>
+                   <?php
+                      $tmp = M("Sys_enum")->where("egroup='fieldtype'")->order("disorder")->select();
+                      foreach ($tmp as $value) {
+                      ?>
+                         <label>
+                         <input class="minimal-red" type="radio" value = "<?php echo $value['evalue'];?>" name="typeid"> <?php echo $value['ename'];?>
+                          </label>
+                      <?php
+                      }  
+                      ?>
+                  </div>
+
+
+                  <div class="form-group">
+                     <label>字段是否自动随机生成</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="isAuto" checked onclick="showDiv(0,'isAutoDiv')">否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="isAuto" onclick="showDiv(1,'isAutoDiv')">是
+                    </label>
+                  </div>  
+
+                  <div class="form-group" id="isAutoDiv" style="display:none;">
+                    <label>字段自动随机生成打头字母 <span class="text-muted" style="font-size:12px;">如：填CM，则自动随机生成CM090887</span></label>
+                    <input type="text" name="isAutoField"  class="form-control"  value="{$vo.isAutoField}">
+                  </div>
+
+
+                   <div class="form-group">
+                     <label>字段是否联动</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="isLink" checked onclick="showDiv(0,'isLinkDiv')">否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="isLink" onclick="showDiv(1,'isLinkDiv')">是
+                    </label>
+                  </div>  
+                  <div class="form-group" id="isLinkDiv" style="display:none;">
+                    <label>请选择联动类型</label>
+                    <select name="isLinkType" class="form-control select2">
+                          <option value="nativeplace">地区类型</option>
+                      </select>   
+                  </div>
+           
+
+                  <div class="form-group">
+                    <label>字段显示名称 <span class="text-muted" style="font-size:12px;">发布内容时显示的提示文字</span></label>
+                    <input type="text" name="title"  class="form-control required"  value="{$vo.title}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>字段名 <span class="text-muted" style="font-size:12px;">只能用英文</span></label>
+                    <input type="text" name="fieldname"  class="form-control required lettersonly"  value="{$vo.fieldname}">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label>关联附加表 <span class="text-muted" style="font-size:12px;">选择关联附加表时字段类型请用option下拉框类型</span></label>
+                      <select name="addon_relation" class="form-control select2">
+                          <option value="0">选择关联附加字段</option>
+                          <option value="arctype|typename">单位名称</option>
+                          <option value="admin|userid">管理员</option>
+                          <?php 
+                            $tmp = M("Channelfield")->where("isrel=1")->field("chid,fieldname,title")->select();
+                            foreach($tmp as $v){
+                              echo '<option value="addon'.$v['chid'].'|'.$v['fieldname'].'"> '.$v['title'].'</option>';
+                            }
+                          ?>                      
+                      </select>                  
+                  </div>
+
+ 
+                  <div class="form-group">
+                    <label>默认值 <span class="text-muted" style="font-size:12px;">如果定义数据类型为select、radio、checkbox时，此处填写被选择的项目(用“,”分开，如“男,女,人妖”)。</span></label>
+                    <input type="text" name="fielddefault"  class="form-control"  value="{$vo.fielddefault}">
+                  </div>
+
+                  <div class="form-group">
+                  <label>最大长度 <span class="text-muted" style="font-size:12px;">文本数据必须填写</span></label>
+                  <input type="text" name="length"  class="form-control required number"  value="255">
+                  </div>
+
+                <?php
+                  if(!empty($_GET['chid'])){
+                      $sort = M("Channelfield")->where("chid=".$_GET['chid'])->order("sort desc")->field("sort")->find();
+                  }
+                  $sort = empty($sort)?0:intval($sort['sort'])+1;
+                ?>
+                  <div class="form-group">
+                    <label>排序 <span class="text-muted" style="font-size:12px;">顺序</span></label>
+                    <input type="text" name="sort"  class="form-control required number"  value="{:$sort}">
+                  </div>
+
+                  <div class="form-group">
+                     <label>是否列表显示</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="displaylist" checked>否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="displaylist">是
+                    </label>
+                  </div>   
+
+
+                  <div class="form-group">
+                     <label>是否验证唯一</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="check_unique" checked>否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="check_unique" >是
+                    </label>
+                  </div>   
+              
+                  <div class="form-group">
+                     <label>是否必填</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="check_empty" checked >否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="check_empty" >是
+                    </label>
+                  </div>  
+
+
+                  <div class="form-group">
+                     <label>是否作为搜索字段</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="issearch" <eq name="vo.issearch" value="0">checked</eq> >否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="issearch" <eq name="vo.issearch" value="1">checked</eq> >是
+                    </label>
+                  </div>
+
+
+                  <div class="form-group">
+                     <label>是否作为关联字段</label>
+                     <br/>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "0" name="isrel" checked>否
+                    </label>
+                    <label>
+                    <input class="minimal-red" type="radio" value = "1" name="isrel" >是
+                    </label>
+                  </div>
+
+
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button  id="sub" class="btn btn-primary">提交</button>
+                  </div>
+                </form>
+              </div><!-- /.box -->
+         
+            </div><!--/.col (left) -->
+
+          </div>   <!-- /.row -->
+        </section><!-- /.content -->
+
+
+
+      </div><!-- /.content-wrapper -->
+
+      
+    <include file="Public:footer" />
+
+     
+    </div><!-- ./wrapper -->
+
+<!-- Select2 -->
+<script src="__PUBLIC__/plugins/select2/select2.full.min.js"></script>
+<script>
+      $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+      }
+      );
+</script>      
+
+
+
+
+
+  </body>
+</html>
