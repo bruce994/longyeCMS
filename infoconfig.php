@@ -17,7 +17,7 @@
   'TOKEN_TYPE' => 'md5',
   'TOKEN_RESET' => true,
   'SITENAME' => '农村信息化管理系统',
-  'server_key' => 'bc9ed510a91c14331cf2f6ce4169807b',
+  'server_key' => 'bc9ed510a91c14331cf2f6ce4169807b', 
   'ischeckuser' => 'false',
   'reg_needmp' => 'false',
   'open_biz' => '1',
