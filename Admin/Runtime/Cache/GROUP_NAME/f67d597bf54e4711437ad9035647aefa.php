@@ -61,7 +61,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="__PUBLIC__/index2.html" class="logo">
+        <a href="<?php echo U("Admin/index");?>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>Lan</b>ren</span>
           <!-- logo for regular state and mobile devices -->
@@ -229,6 +229,8 @@
             </li>
             <?php } ?>
 
+
+            <li><a href="<?php echo U("Public/logout");?>"><i class="fa fa-circle-o text-red"></i><span>退出</span></a></li>
 
           </ul>
         </section>

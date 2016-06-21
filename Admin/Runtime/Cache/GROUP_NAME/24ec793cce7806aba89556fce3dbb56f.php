@@ -28,7 +28,7 @@ maps.addControl(control);
 
 
 
-<?php  $channel = M("Channeltype")->where("isCoordinate=1")->field("id")->select(); if(count($channel)>0){ foreach ($channel as $ch) { $addon = M("Addon".$ch['id'])->limit("0,200")->select(); foreach ($addon as $add) { if($add['longitude'] && $add['latitude']){ $content = ''; $channelField = M("Channelfield")->where("chid=".$ch['id']." and displaylist=0")->order("sort")->field("title,fieldname,typeid,rel_table,rel_field")->select(); foreach ($channelField as $field) { $content .= "<p style=\"text-align:left\">".$field['title'].":".fieldValue($add[$field['fieldname']],$field['typeid'],$field['rel_table'],$field['rel_field'])."</p>"; } ?>     
+<?php  $channel = M("Channeltype")->where("isCoordinate=1")->field("id")->select(); if(count($channel)>0){ foreach ($channel as $ch) { $map = array(); if(intval($_SESSION["admin"]['usertype']) != 10 ){ $map['userid'] = array('eq',$_SESSION["admin"]['userid']); } $addon = M("Addon".$ch['id'])->where($map)->limit("0,200")->select(); foreach ($addon as $add) { if($add['longitude'] && $add['latitude']){ $content = ''; $channelField = M("Channelfield")->where("chid=".$ch['id']." and displaylist=0")->order("sort")->field("title,fieldname,typeid,rel_table,rel_field")->select(); foreach ($channelField as $field) { $content .= "<p style=\"text-align:left\">".$field['title'].":".fieldValue($add[$field['fieldname']],$field['typeid'],$field['rel_table'],$field['rel_field'])."</p>"; } ?>     
      
       p1 = <?php echo $add['longitude'];?> * 100000;
       p2 = <?php echo $add['latitude'];?> * 100000;
