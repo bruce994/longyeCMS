@@ -32,7 +32,13 @@ maps.addControl(control);
 $channel = M("Channeltype")->where("isCoordinate=1")->field("id")->select();
 if(count($channel)>0){
     foreach ($channel as $ch) {
-       $addon = M("Addon".$ch['id'])->limit("0,200")->select();
+
+      $map  =  array();
+      if(intval($_SESSION["admin"]['usertype']) != 10 ){
+        $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+      }
+
+       $addon = M("Addon".$ch['id'])->where($map)->limit("0,200")->select();
        foreach ($addon as $add) {
         if($add['longitude'] && $add['latitude']){
 

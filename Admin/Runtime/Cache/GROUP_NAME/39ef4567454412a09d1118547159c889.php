@@ -1,9 +1,9 @@
-
+<?php if (!defined('THINK_PATH')) exit();?>
 <script type="text/javascript" language="javascript" src="http://api.51ditu.com/js/maps.js"></script>
 <script type="text/javascript">
 var map_id = 'mymap';
-var p1 = '{:$_GET['longitude']}';
-var p2 = '{:$_GET['latitude']}';
+var p1 = '<?php echo $_GET['longitude'];?>';
+var p2 = '<?php echo $_GET['latitude'];?>';
 var mark = 'mark';
 var show = '1';
 var title = '';
@@ -14,7 +14,7 @@ var view_level = 2;
 </script>
 </head>
 <body style="margin:0;">
-<div id="mymap" style="width:100%; height:{:$_GET['height']}px; float:left;">loading...</div>
+<div id="mymap" style="width:100%; height:<?php echo $_GET['height'];?>px; float:left;">loading...</div>
 <input type="button" onclick="markmap();" id="markbtn" style="display:none;" />
 <input type="hidden" id="point1" value='' />
 <input type="hidden" id="point2" value='' />
@@ -44,7 +44,7 @@ if(p1 != '' && p2 != '') {
   }
 
 } else {
-  maps.cityNameAndZoom( "{:C("city")}" , view_level );
+  maps.cityNameAndZoom( "<?php echo C("city");?>" , view_level );
 }
 
 var mkctrl = new LTMarkControl();
@@ -67,4 +67,4 @@ function getPoi() {
     document.getElementById('point1').value = poi.getLongitude() / 100000;
     document.getElementById('point2').value = poi.getLatitude() / 100000;
 }
-</script>                                
+</script>

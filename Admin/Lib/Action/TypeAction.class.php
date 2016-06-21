@@ -1,7 +1,11 @@
 <?php
   class TypeAction extends CommonAction{
 
-
+	function _filter(&$map){
+		  if(intval($_SESSION["admin"]['usertype']) != 10 ){
+			  $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+		  }
+	}	
 
      public function index(){
 				Cookie::set ( '_currentUrl_', __SELF__ );
@@ -62,22 +66,27 @@ public function delete() {
 
 		        //列表过滤器，生成查询Map对象
 
+				if (method_exists ( $this, '_filter' )) {
+					$this->_filter ( $map );
+				}
 			    if(!empty($_GET['aid'])){
 					 $map['aid'] = array('eq',$_GET['aid']);
 				}
 				if(!empty($_GET['q'])){
 					 $map['title'] = array('like',"%".$_GET['q']."%");
 				}
-				if(!empty($_GET['typeid'])){
-					 $map['typeid'] = array('eq',$_GET['typeid']);
-                }else{
-                    $typeid = $_SESSION["admin"]['typeid'];
-                    if($typeid){
-                        $tmp = $typeid.getType2($typeid);
-                        $map['typeid'] = array ('in', explode ( ',', $tmp ) );
 
-                    }
-                }
+
+				// if(!empty($_GET['typeid'])){
+				// 	 $map['typeid'] = array('eq',$_GET['typeid']);
+    //             }else{
+    //                 $typeid = $_SESSION["admin"]['typeid'];
+    //                 if($typeid){
+    //                     $tmp = $typeid.getType2($typeid);
+    //                     $map['typeid'] = array ('in', explode ( ',', $tmp ) );
+
+    //                 }
+    //             }
 
                 if(!empty($_GET['channel'])){
 					 $map['channel'] = array('eq',$_GET['channel']);
@@ -289,8 +298,11 @@ public function article_delete() {
 	$model = M ("Addon".$this->_param("channel"));
 	$id = $_REQUEST ["id"];
 	if (isset ( $id )) {
-		$condition = array ("aid" => array ('in', explode ( ',', $id ) ) );
-		$list=$model->where ( $condition )->save(array("recycle"=>1));
+		if (method_exists ( $this, '_filter' )) {
+			$this->_filter ( $map );
+		}
+		$map['aid'] = array ('in', explode ( ',', $id ) );
+		$list=$model->where ( $map )->save(array("recycle"=>1));
 		if ($list!==false) {
 			$this->success ('删除成功！' );
 		} else {
@@ -303,8 +315,11 @@ public function article_restore() {
 	$model = M ("Addon".$this->_param("channel"));
 	$id = $_REQUEST ["id"];
 	if (isset ( $id )) {
-		$condition = array ("aid" => array ('in', explode ( ',', $id ) ) );
-		$list=$model->where ( $condition )->save(array("recycle"=>0));
+		if (method_exists ( $this, '_filter' )) {
+			$this->_filter ( $map );
+		}
+		$map['aid'] = array ('in', explode ( ',', $id ) );
+		$list=$model->where ( $map )->save(array("recycle"=>0));
 		if ($list!==false) {
 			$this->success ('恢复成功！' );
 		} else {
@@ -319,8 +334,11 @@ public function complete_delete() {
 	$model = M ("Addon".$this->_param("channel"));
 	$id = $_REQUEST ["id"];
 	if (isset ( $id )) {
-		$condition = array ("aid" => array ('in', explode ( ',', $id ) ) );
-		$list=$model->where ( $condition )->delete();
+		if (method_exists ( $this, '_filter' )) {
+			$this->_filter ( $map );
+		}
+		$map['aid'] = array ('in', explode ( ',', $id ) );
+		$list=$model->where ( $map )->delete();
 		if ($list!==false) {
 			$this->success ('彻底删除成功！' );
 		} else {
@@ -334,8 +352,11 @@ public function article_delete_auto() {
 	$model = M ("Archives");
 	$id = $_REQUEST ["id"];
 	if (isset ( $id )) {
-		$condition = array ("id" => array ('in', explode ( ',', $id ) ) );
-		$list=$model->where ( $condition )->delete();
+		if (method_exists ( $this, '_filter' )) {
+			$this->_filter ( $map );
+		}
+		$map['aid'] = array ('in', explode ( ',', $id ) );
+		$list=$model->where ( $map )->delete();
 		if ($list!==false) {
 			$model = M ("Addon".$this->_param("channel"));
 			$condition = array ("aid" => array ('in', explode ( ',', $id ) ) );
@@ -403,8 +424,7 @@ public function article_update(){
 				$addon->longitude = $longitude;
 				$addon->latitude = $latitude;
 			}
-
-						
+			$addon->userid = $_SESSION["admin"]['userid'];
 			$addon->userip = get_client_ip();
 			if($result	 =	 $addon->save()) {
 				$this->success('更新成功！');
@@ -438,6 +458,7 @@ public function article_update_auto(){
 				if(!$addon->create()) {
 					$this->error($addon->getError());
 				}else{
+					$addon->userid = $_SESSION["admin"]['userid'];
 					$addon->userip = get_client_ip();
 					$addon->aid = $this->_param("id");
 					$addon->save();
@@ -495,6 +516,7 @@ public function article_insert(){
 
 			$addon->userip = get_client_ip();
 			$addon->typeid = intval($_SESSION["admin"]['typeid']);
+			$addon->userid = $_SESSION["admin"]['userid'];
 			if($result	 =	 $addon->add()) {
 				$this->success('添加成功！');
 			}else{
@@ -523,6 +545,7 @@ public function article_insert_auto(){
 				if(!$addon->create()) {
 					$this->error($addon->getError());
 				}else{
+					$addon->userid = $_SESSION["admin"]['userid'];
 					$addon->userip = get_client_ip();
 					$addon->aid = $result;
 					$addon->add();
@@ -725,8 +748,6 @@ public function article_insert_auto(){
 
 
 
-
-
 			 $channel_1 = $_GET['channel'];
 			 $ch = M ( "Channeltype" )->where("id = ".$channel_1)->find();
 			 $this->assign ( 'channel', $ch );
@@ -745,6 +766,11 @@ public function article_insert_auto(){
 					}
 			   }
 			   //./search
+
+
+			if (method_exists ( $this, '_filter' )) {
+				$this->_filter ( $map );
+			}
 
 
 			if (!empty ( $_REQUEST ['_order'] )) {
