@@ -77,6 +77,11 @@ public function delete() {
 				}
 
 
+				if(!empty($_GET['bind_aid'])){
+					 $map['bind_aid'] = array('eq',$_GET['bind_aid']);
+				}
+
+
 				// if(!empty($_GET['typeid'])){
 				// 	 $map['typeid'] = array('eq',$_GET['typeid']);
     //             }else{
