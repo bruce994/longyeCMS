@@ -93,27 +93,27 @@
                       <input type="text" name="uname" value="{$vo.uname}" class="form-control">
                     </div>
 
+                
+
                     <div class="form-group">
-                      <label>权限(可管理的单位)</label>
-                      <select name="typeid" class="form-control required">
+                      <label>地区权限</label>
+                      <select name="areaID" class="form-control required">
                       <?php
-                         $typeid = empty($_SESSION["admin"]['typeid'])?0:$_SESSION["admin"]['typeid'];
-                         if($typeid == 0){
+                          $areaID = empty($_SESSION["admin"]['areaID'])?0:$_SESSION["admin"]['areaID'];
+                          if($areaID == 0){
                               echo '<option value="0">所有权限</option>';
-                              echo getJG(0,0,"",$vo['typeid']);
+                              echo getEnum(0,0,"",$vo['areaID'],"nativeplace");
                           }else{
-                              echo getJG($typeid,0,"",$vo['typeid']);                            
+                              echo getEnum($areaID,0,"",$vo['areaID'],"nativeplace");
                           }
-                      ?>
+                          ?>
                       </select>                  
                     </div>
-
 
                     <div class="form-group">
                       <label>修改密码(不填则不修改)</label>
                       <input type="password" name="pwd"  class="form-control">
                     </div>
-
 
                     <div class="form-group">
                       <label>头像</label>
@@ -122,7 +122,6 @@
                           <span class="input-group-addon"><a href="javascript:void();" onclick="upyunWapPicUpload('picurl')"><i class="fa fa-fw fa-upload"></i>点击上传</a></span>
                       </div> 
                     </div>  
-
 
                   <!-- radio -->
                   <div class="form-group">

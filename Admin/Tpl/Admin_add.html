@@ -99,15 +99,15 @@
                     </div>
 
                     <div class="form-group">
-                      <label>权限</label>
-                      <select name="typeid" class="form-control required">
+                      <label>地区权限</label>
+                      <select name="areaID" class="form-control required">
                       <?php
-                          $typeid = empty($_SESSION["admin"]['typeid'])?0:$_SESSION["admin"]['typeid'];
-                          if($typeid == 0){
+                          $areaID = empty($_SESSION["admin"]['areaID'])?0:$_SESSION["admin"]['areaID'];
+                          if($areaID == 0){
                               echo '<option value="0">所有权限</option>';
-                              echo getJG(0,0,"");
+                              echo getEnum(0,0,"","","nativeplace");
                           }else{
-                              echo getJG($typeid,0,"");
+                              echo getEnum($areaID,0,"","","nativeplace");
                           }
                           ?>
                       </select>                  

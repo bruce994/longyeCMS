@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$Think.config.SITENAME}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="__PUBLIC__/misc/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="__PUBLIC__/misc/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="__PUBLIC__/misc/html5shiv.min.js"></script>
+        <script src="__PUBLIC__/misc/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      .color-palette {
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+      }
+      .color-palette-set {
+        margin-bottom: 15px;
+      }
+      .color-palette span {
+        display: none;
+        font-size: 12px;
+      }
+      .color-palette:hover span {
+        display: block;
+      }
+      .color-palette-box h4 {
+        position: absolute;
+        top: 100%;
+        left: 25px;
+        margin-top: -40px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+        display: block;
+        z-index: 7;
+      }
+    </style>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <include file="Public:head" />
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            数据字典管理
+            <small>分类</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="{:U("System/index")}">数据字典</a></li>
+            <?php 
+                echo getEnum2_link($_GET['reid']);
+            ?>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                      <div class="box-header">
+                          <div style="float:left;margin:0 8px;">
+                            <a href="{:U("System/addEnum",array("reid"=>$_GET['reid'],"topid"=>$_GET['topid'],"ss"=>6))}" class="btn btn-block btn-default"><i class="fa fa-fw fa-plus"></i>添加</a>
+                          </div>
+                          
+                      </div><!-- /.box-header -->
+
+                <div class="box-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>编号</th>
+                        <th>组类别名</th>
+                        <th>缓存组名</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <volist id="vo" name="list">
+                        <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.ename}</td>
+                        <td>{$vo.egroup}</td>
+                        <td>
+                          <?php
+                            if(empty($vo['topid'])){
+                                $vo['topid'] = $vo['id'];
+                            }
+                          ?>
+                           <a href="{:U("System/enum",array("reid"=>$vo['id'],"topid"=>$vo['topid'],"ss"=>6))}"><i class="fa fa-fw fa-plus"></i>进入下级</a> | <a title="编辑" href="{:U("System/editEnum",array("id"=>$vo['id'],"ss"=>6))}"><i class="fa fa-fw fa-edit"></i></a> | <a onclick="return window.confirm('确定删除？');" title="删除" href="{:U("System/deleteEnum",array("id"=>$vo['id']))}"><i class="fa fa-fw fa-remove"></i></a> 
+                        </td>
+                        </tr>
+                      </volist>
+
+                    </tbody>
+                  </table>
+                </div><!-- /.box-body -->
+
+
+                <div class="row" style="margin-left:5px;">
+                  <div class="col-sm-5"><div class="dataTables_info">{$totalCount} 条记录 {$currentPage}/{$totalPages} 页</div></div>
+                  <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_simple_numbers">
+                    <ul class="pagination">
+                      {$page}
+                   </ul>
+                  </div>
+                  </div>
+                </div>
+
+
+              </div><!-- /.box -->
+
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      
+    <include file="Public:footer" />
+
+     
+    </div><!-- ./wrapper -->
+
+
+ 
+
+
+
+
+
+  </body>
+</html>

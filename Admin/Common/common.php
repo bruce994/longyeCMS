@@ -310,6 +310,57 @@ function getJG($id=0,$reid=0,$tt="",$select="",$channel=''){
 }
 
 
+
+
+
+//递归 获取分类
+function getEnum($id=0,$reid=0,$tt="",$select="",$egroup=''){
+    $jg = M("Sys_enum");
+    if($reid ==0 && $id == 0){
+        if($egroup){$egroup = " and egroup='".$egroup."'";}
+        $list = $jg->where("topid=0".$egroup)->field("id,reid,ename")->select();
+        foreach ($list as $value) {
+            $tmp = getEnum(0,$value['id'],'&nbsp;&nbsp;─',$select,$where);
+            $tmp1 = '';
+            if($select == $value['id']){
+                $tmp1 = 'selected';
+            }
+
+            $arr .= "<option value='{$value['id']}' {$tmp1}>{$value['ename']}</option>".$tmp;
+        }
+    }elseif ($id > 0 && $reid==0) {
+        if($egroup){$egroup = " and egroup='".$egroup."'";}
+        $vo = $jg->where("id=$id".$egroup)->field("id,reid,ename")->find();
+        $tmp = getEnum(0,$vo['id'],'&nbsp;&nbsp;─',$select,$egroup);
+        $tmp1 = '';
+        if($select == $vo['id']){
+            $tmp1 = 'selected';
+        }
+        $arr .= "<option value='{$vo['id']}' {$tmp1}>{$vo['ename']}</option>".$tmp;
+    }
+    else{
+        if($egroup){$egroup = " and egroup='".$egroup."'";}
+        $list = $jg->where("reid=".$reid.$egroup)->field("id,reid,ename")->select();
+        foreach ($list as $value) {
+            $tmp = getEnum(0,$value['id'],'&nbsp;&nbsp;'.$tt.'─',$select,$egroup);
+            $tmp1 = '';
+            if($select == $value['id']){
+                $tmp1 = 'selected';
+            }
+            $arr .= "<option value='{$value['id']}' {$tmp1}>{$tt}{$value['ename']}</option>".$tmp;
+        }
+    }
+
+    return $arr;
+}
+
+
+
+
+
+
+
+
 //递归 删除分类
 function deleteJG2($id=0){
     $jg = M("Arctype");
@@ -317,6 +368,19 @@ function deleteJG2($id=0){
     foreach ($voList as $value) {
         deleteJG2($value["id"]);
         $jg->where("id=".$value["id"])->delete();
+    }
+    $jg->where("id=".$id)->delete();
+}
+
+
+
+//递归 删除分类
+function deleteEN2($id=0){
+    $jg = M("Sys_enum");
+    $voList = $jg->where("reid=".$id)->field("id")->select();
+    foreach ($voList as $value) {
+        deleteEN2($value["id"]);
+        $jg->where("reid=".$id)->delete();
     }
     $jg->where("id=".$id)->delete();
 }
@@ -348,6 +412,38 @@ function getJG2($id=0,$reid=0,$tt=""){
     }
     return $arr;
 }
+
+
+
+
+
+
+//递归 获取分类
+function getEnum2($id=0,$reid=0,$tt=""){
+    $jg = M("Sys_enum");
+    $list = $jg->where("reid=".$reid)->field("id,disorder,reid,topid,ename,egroup")->order("disorder")->select();
+    foreach ($list as $value) {
+        $tmp = getEnum2(0,$value['id'],$tt.'─');
+        $arr .='<tr><td>'.$value['id'].'</td><td><a href="'.U("System/enum",array("reid"=>$value["id"],"ss"=>6)).'">'.$tt.$value['ename'].'</a></td><td>'.$value['egroup'].'</td><td><a href="'.U("System/addEnum",array("reid"=>$value['id'],"topid"=>$value['topid'],"ss"=>2)).'"><i class="fa fa-fw fa-plus"></i>增加下级</a> | <a title="编辑" href="'.U("Type/edit",array("id"=>$value['id'],"ss"=>2)).'"><i class="fa fa-fw fa-edit"></i></a> | <a onclick="return window.confirm(\'确定删除？\');" title="删除" href="'.U("System/deleteEnum",array("id"=>$value['id'])).'"><i class="fa fa-fw fa-remove"></i></a></td></tr>'.$tmp;
+    }
+    return $arr;
+}
+
+
+//递归 
+function getEnum2_link($id=0){
+    $jg = M("Sys_enum");
+    $vo = $jg->where("id=".$id)->field("id,disorder,reid,topid,ename,egroup")->find();
+    if($vo){
+      $tmp = getEnum2_link($vo['reid']);
+      $arr .= $tmp.'<li><a href="'.U("System/enum",array("reid"=>$id,"ss"=>6)).'">'.$vo['ename'].'</a></li>';
+    }
+    return $arr;
+}
+
+
+
+
 
 function fieldValue($value,$typeid,$rel_table='',$rel_field=''){
    switch ($typeid) {
