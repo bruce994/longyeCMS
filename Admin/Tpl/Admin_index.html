@@ -125,14 +125,7 @@
                              <td>{$vo['userid']}</td>
                              <td>{$vo['uname']}</td>
                              <td>
-                                <?php
-                                    if($vo['typeid']){
-                                      $tmp = M("Arctype")->where("id=".$vo['typeid'])->field("id,typename")->find();
-                                      echo $tmp['typename'];
-                                    }else{
-                                      echo '所有权限';
-                                    }
-                                  ?>
+                                {:trim(getEnum22($vo['areaID'],','),',')}
                              </td>
                              <td>
                                 <neq name="vo.logintime" value="0">

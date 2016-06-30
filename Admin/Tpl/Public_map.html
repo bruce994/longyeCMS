@@ -44,7 +44,7 @@ if(p1 != '' && p2 != '') {
   }
 
 } else {
-  maps.cityNameAndZoom( "{:C("city")}" , view_level );
+  maps.cityNameAndZoom( "{:getEnum22(C("area"))}" , view_level );
 }
 
 var mkctrl = new LTMarkControl();

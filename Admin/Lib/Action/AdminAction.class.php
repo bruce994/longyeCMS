@@ -12,7 +12,7 @@
 
 	public function update(){
 		  $P = D("Admin");
-          $fields = 'id,uname,typeid,status,picurl';
+          $fields = 'id,uname,areaID,status,picurl';
           if(!empty($_POST['pwd'])){
                $fields .= ',pwd';
            }

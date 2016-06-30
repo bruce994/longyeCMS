@@ -2,9 +2,13 @@
   class TypeAction extends CommonAction{
 
 	function _filter(&$map){
+
 		  if(intval($_SESSION["admin"]['usertype']) != 10 ){
-			  $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+			  //$map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+		  	  $areas = $_SESSION["admin"]['areaID'].",".trim(getIdEnumAll($_SESSION["admin"]['areaID']),",");
+  	  		  $map['areaID'] = array ('in', explode ( ',', $areas ) );
 		  }
+
 	}	
 
      public function index(){
@@ -92,6 +96,9 @@ public function delete() {
 
     //                 }
     //             }
+
+
+
 
                 if(!empty($_GET['channel'])){
 					 $map['channel'] = array('eq',$_GET['channel']);
@@ -410,6 +417,18 @@ public function article_edit() {
 
 public function article_update(){
 		C('TOKEN_ON',false);
+
+		//地区权限判断
+		  if(intval($_SESSION["admin"]['usertype']) != 10 ){
+		  	 $areas = $_SESSION["admin"]['areaID'].",".trim(getIdEnumAll($_SESSION["admin"]['areaID']),",");
+		  	 $areasArr = explode ( ',', $areas ) ;
+		  	 $areaID = $this->_param("areaID");
+		  	 if(!in_array($areaID, $areasArr)){
+				$this->error('操作失败，权限不够');
+		  	 }
+		  }
+
+
 		foreach ($_POST as $key => $value) {
 			if(is_array($_POST[$key])){
 				$_POST[$key] = implode(",", $value);
@@ -478,6 +497,19 @@ public function article_update_auto(){
 
 public function article_insert(){
 		C('TOKEN_ON',false);
+
+
+		//地区权限判断
+		  if(intval($_SESSION["admin"]['usertype']) != 10 ){
+		  	 $areas = $_SESSION["admin"]['areaID'].",".trim(getIdEnumAll($_SESSION["admin"]['areaID']),",");
+		  	 $areasArr = explode ( ',', $areas ) ;
+		  	 $areaID = $this->_param("areaID");
+		  	 if(!in_array($areaID, $areasArr)){
+				$this->error('操作失败，权限不够');
+		  	 }
+		  }
+
+
 		foreach ($_POST as $key => $value) {
 			if(is_array($_POST[$key])){
 				$_POST[$key] = implode(",", $value);

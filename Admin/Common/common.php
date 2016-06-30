@@ -553,6 +553,33 @@ function getType2($id=0){
 }
 
 
+//递归  获取分类id下级所有分类
+function getIdEnumAll($id=0){
+    $jg = M("Sys_enum");
+    $voList = $jg->where("reid=".$id)->field("id")->select();
+    foreach ($voList as $value) {
+       $tmp = getIdEnumAll($value["id"]);
+       $result .=','.$value['id'].$tmp;
+     }
+    return $result;
+}
+
+
+
+
+//递归  找上级
+function getEnum22($id=0,$tt=""){
+    if(empty($id)) return;
+    $jg = M("Sys_enum");
+    $vo = $jg->where("id=".$id." and topid<>0 ")->field("reid,ename")->find();
+    if($vo){
+      $tmp = getEnum22($vo['reid']);
+    }
+    return $tmp.$tt.$vo['ename'];
+}
+
+
+
 
 function Compress_Html($string){
     return trim(preg_replace(array("/> *([^ ]*) *</","/<!--[^!]*-->/","'/\*[^*]*\*/'","/\r\n/","/\n/","/\t/",'/>[ ]+</',"/\s(?=\s)/"),array(">\\1<",'','','','','','><',''),$string));

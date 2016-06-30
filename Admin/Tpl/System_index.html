@@ -154,30 +154,32 @@
          
                   <div class="form-group">
                       <label>所在地区</label>                        
-
                              <input  type="hidden" id="area"  name="area"  value="<?php echo C('area');?>"  >
-
-                             <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="<?php echo C('area');?>"  data-toggle="modal" data-target="#myModalcity" >
-
-                              <!--dialog-->
-                              <div id="myModalcity" class="modal fade" tabindex="-1" role="dialog">
-                                  <div class="modal-dialog modal-sm" role="document">
-                                      <div class="modal-content">
-                                          <div class="modal-body" style="text-align:center;">
-                                            <div class="row">
-                                              <div class="col-md-12" id="ryynetArea">
-                                               
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                              <button type="button" class="btn btn-primary" onclick="checked_city()">确定</button>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
+                             <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="<?php echo getEnum22(C('area'));?>"  data-toggle="modal" data-target="#myModalcity" >
                     </div>
+
+
+
+ <!--area-->
+  <div id="myModalcity" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+              <div class="modal-body" style="text-align:center;">
+                <div class="row">
+                  <div class="col-md-12" id="ryynetArea">
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" onclick="checked_city()">确定</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
 <?php
 
 $fileContent = F('nativeplace');
@@ -218,9 +220,6 @@ function showArea(reid,ement,rank1){
     $("#area_"+i).remove();
  }
 
-console.log(rank);
-console.log(rank1);
-
 
   tmp = "<select id='area_"+rank+"'  style='margin:8px 0px;' class='form-control' name='nativeplace' id='nativeplace' onchange=\"showArea(this.value,'ryynetArea',"+rank+")\"><option value='-1'>请选择</option>";
   j = 0;
@@ -250,17 +249,21 @@ console.log(rank1);
 function checked_city(){
   tmp = '';
   $("#ryynetArea select option:selected").each(function() {
-      tmp += $( this ).text(); 
-
-      $("#area").val($( this ).val()); //保存最后选择地区
-      
+    if($( this ).val() > 1) {
+        tmp += $( this ).text(); 
+        $("#area").val($( this ).val()); //保存最后选择地区
+    }
   });    
   $("#showAreaText").val(tmp);
   $('#myModalcity').modal('hide');
+
+  if(tmp == ''){
+     $("#area").val(0);
+  }
 }
 
 </script>  
-
+<!--END area-->
 
 
 

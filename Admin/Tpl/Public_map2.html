@@ -35,7 +35,8 @@ if(count($channel)>0){
 
       $map  =  array();
       if(intval($_SESSION["admin"]['usertype']) != 10 ){
-        $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+            $areas = $_SESSION["admin"]['areaID'].",".trim(getIdEnumAll($_SESSION["admin"]['areaID']),",");
+            $map['areaID'] = array ('in', explode ( ',', $areas ) );
       }
 
        $addon = M("Addon".$ch['id'])->where($map)->limit("0,200")->select();

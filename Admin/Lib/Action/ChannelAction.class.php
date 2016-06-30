@@ -51,6 +51,7 @@ $sql2 = <<<EOF
 			  `aid` int(11) NOT NULL AUTO_INCREMENT,
 			  `bind_aid` int(11) NOT NULL DEFAULT '0',
 			  `userid` char(30) NOT NULL DEFAULT '',
+			  `areaID` int(11) NOT NULL DEFAULT '0',
 			  `typeid` int(11) NOT NULL DEFAULT '0',
 			  `channel` int(11) NOT NULL DEFAULT '0',
 			  `redirecturl` varchar(255) NOT NULL DEFAULT '',
@@ -60,7 +61,7 @@ $sql2 = <<<EOF
 			  `userip` char(15) NOT NULL DEFAULT '',
 			  `recycle` tinyint(1) NOT NULL DEFAULT '0',
 			  PRIMARY KEY (`aid`),
-			  KEY `typeid` (`typeid`)
+			  KEY `areaID` (`areaID`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOF;
 

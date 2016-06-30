@@ -93,22 +93,122 @@
                       <input type="text" name="uname" value="{$vo.uname}" class="form-control">
                     </div>
 
-                
 
                     <div class="form-group">
-                      <label>地区权限</label>
-                      <select name="areaID" class="form-control required">
-                      <?php
-                          $areaID = empty($_SESSION["admin"]['areaID'])?0:$_SESSION["admin"]['areaID'];
-                          if($areaID == 0){
-                              echo '<option value="0">所有权限</option>';
-                              echo getEnum(0,0,"",$vo['areaID'],"nativeplace");
-                          }else{
-                              echo getEnum($areaID,0,"",$vo['areaID'],"nativeplace");
-                          }
-                          ?>
-                      </select>                  
+                      <label>地区权限</label> <small style="color:red;">不选择代表所有权限</small>
+                       <input  type="hidden" id="area"  name="areaID"  value="{$vo['areaID']}"  >
+                       <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="{:getEnum22($vo['areaID'])}"  data-toggle="modal" data-target="#myModalcity" >
                     </div>
+
+
+ <!--area-->
+  <div id="myModalcity" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+              <div class="modal-body" style="text-align:center;">
+                <div class="row">
+                  <div class="col-md-12" id="ryynetArea">
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" onclick="checked_city()">确定</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+<?php
+
+$fileContent = F('nativeplace');
+if(empty($fileContent)){
+  $enum = M("Sys_enum")->where("egroup='nativeplace'")->order("disorder")->select();
+  $fileContent = '<script>em_nativeplace=new Array();';
+  $i = 0 ;
+  foreach ($enum as $enumValue) {
+    $fileContent .= "em_nativeplace[".$i."] = new Array('".$enumValue['id']."','".$enumValue['reid']."','".$enumValue['topid']."','".$enumValue['ename']."','".$enumValue['disorder']."');";
+    $i++;
+  }
+  $fileContent .= '</script>';
+  F('nativeplace',$fileContent);
+}
+echo $fileContent; 
+
+?>
+
+<script type="text/javascript">
+var rank = 1;
+
+$( document ).ready(function() {
+  showArea(0,"ryynetArea",rank);
+});
+
+function showArea(reid,ement,rank1){
+
+  if(reid == 0){
+    for(i=0;i < em_nativeplace.length;i++){
+      if(em_nativeplace[i][1] == "0" && em_nativeplace[i][2] == "0"){
+        reid = em_nativeplace[i][0];
+      }
+    }
+  }
+
+
+ for(i=rank;i > rank1;i--){
+    $("#area_"+i).remove();
+ }
+
+
+  tmp = "<select id='area_"+rank+"'  style='margin:8px 0px;' class='form-control' name='nativeplace' id='nativeplace' onchange=\"showArea(this.value,'ryynetArea',"+rank+")\"><option value='-1'>请选择</option>";
+  j = 0;
+  for(i=0;i < em_nativeplace.length;i++){
+    if(em_nativeplace[i][1] == reid){
+      ss = '';
+      // if(nat1 !=""){
+      //   if(i==nat1){
+      //     ss = "selected";  
+      //   } 
+      // }
+      tmp += "<option value='"+em_nativeplace[i][0]+"' "+ss+">"+em_nativeplace[i][3]+"</option>";
+      j++;
+    }
+  }
+  tmp += "</select>";
+
+  if(j>0)
+  {
+      rank++;
+      $("#"+ement).append(tmp);
+  }  
+
+}
+
+
+function checked_city(){
+  tmp = '';
+  $("#ryynetArea select option:selected").each(function() {
+    if($( this ).val() > 1) {
+        tmp += $( this ).text(); 
+        $("#area").val($( this ).val()); //保存最后选择地区
+    }
+  });    
+  $("#showAreaText").val(tmp);
+  $('#myModalcity').modal('hide');
+
+  if(tmp == ''){
+     $("#area").val(0);
+  }
+
+}
+
+</script>  
+<!--END area-->
+
+
+
 
                     <div class="form-group">
                       <label>修改密码(不填则不修改)</label>
@@ -164,16 +264,10 @@
   <!-- daterange picker -->
   <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css">
 
-  <script src="__PUBLIC__/misc/ckeditor/ckeditor.js"></script>
   <link rel="stylesheet" href="__PUBLIC__/misc/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
     <script>
       $(function () {
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace( 'editor1', {
-            filebrowserUploadUrl: '/Admin/index.php?m=Upyun&a=upload&from=Wap'
-        });
-
+       
         //Date range picker with time picker
         $('#reservationtime').daterangepicker({singleDatePicker: true, timePickerIncrement: 1,timePicker: true,timePicker12Hour:false, format: 'YYYY/MM/DD h:mm A'});
       });
