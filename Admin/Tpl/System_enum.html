@@ -94,6 +94,7 @@
                         <th>编号</th>
                         <th>组类别名</th>
                         <th>缓存组名</th>
+                        <th>排序</th>
                         <th>操作</th>
                       </tr>
                     </thead>
@@ -103,8 +104,9 @@
                         <td>{$vo.id}</td>
                         <td>{$vo.ename}</td>
                         <td>{$vo.egroup}</td>
-                        <td> 
-                          <?php
+                        <td>{$vo.disorder}</td>
+                        <td>
+                      <?php
                             if(empty($vo['topid'])){
                                 $vo['topid'] = $vo['id'];
                             }
