@@ -105,23 +105,27 @@
                     </div>
 
 
-
-
-                  <!-- radio -->
-                  <div class="form-group">
+                    <div class="form-group">
                      <label>字段类型</label>
-                     <br/>
-                   <?php
-                      $tmp = M("Sys_enum")->where("egroup='fieldtype'")->order("disorder")->select();
-                      foreach ($tmp as $value) {
-                      ?>
-                         <label>
-                         <input class="minimal-red" type="radio" value = "<?php echo $value['evalue'];?>" name="typeid"> <?php echo $value['ename'];?>
-                          </label>
-                      <?php
-                      }  
-                      ?>
-                  </div>
+                     <br>
+                      <label>
+                         <input class="minimal-red" type="radio" value="0" name="typeid"> 单行文本                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="1" name="typeid"> 多行文本                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="2" name="typeid"> 编辑器文本                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="3" name="typeid"> 整数类型                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="4" name="typeid"> 小数类型                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="5" name="typeid"> 附件类型                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="6" name="typeid"> option下拉框                          </label>
+                                               <label>
+                         <input class="minimal-red" type="radio" value="7" name="typeid"> radio选项卡                          </label>
+                      </div>
+
 
 
                   <div class="form-group">
@@ -154,6 +158,7 @@
                   <div class="form-group" id="isLinkDiv" style="display:none;">
                     <label>请选择联动类型</label>
                     <select name="isLinkType" class="form-control select2">
+                          <option value=""></option>
                           <option value="nativeplace">地区类型</option>
                       </select>   
                   </div>
@@ -174,8 +179,6 @@
                     <label>关联附加表 <span class="text-muted" style="font-size:12px;">选择关联附加表时字段类型请用option下拉框类型</span></label>
                       <select name="addon_relation" class="form-control select2">
                           <option value="0">选择关联附加字段</option>
-                          <option value="arctype|typename">单位名称</option>
-                          <option value="admin|userid">管理员</option>
                           <?php 
                             $tmp = M("Channelfield")->where("isrel=1")->field("chid,fieldname,title")->select();
                             foreach($tmp as $v){
