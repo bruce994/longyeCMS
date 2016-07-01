@@ -236,9 +236,7 @@ function checked_city<?php echo $v['id'];?>(){
                                 <span class="input-group-addon"><a href="javascript:void();" onclick="upyunWapPicUpload('<?php echo $v['fieldname'];?>')"><i class="fa fa-fw fa-upload"></i>点击上传</a></span>
                               </div>
                       <?php }elseif ($v['typeid'] == "6" ) { 
-
-                            $map = array();
-                            
+                            $map['recycle'] = array("eq",0);
                             $areaID = $_SESSION["admin"]['areaID'];
                             if($areaID){
                                 $tmp = $areaID.",".trim(getIdEnumAll($areaID),",");
