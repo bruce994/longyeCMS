@@ -238,19 +238,21 @@ function checked_city<?php echo $v['id'];?>(){
                       <?php }elseif ($v['typeid'] == "6" ) { 
 
                             $map = array();
-                            if($v['fieldname'] == "operatorID"){ //admin表
-                               $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
-                            }
-                           
-                            $typeid = $_SESSION["admin"]['typeid'];
-                            if($typeid){
-                                $tmp = $typeid.getType2($typeid);
+                            
+                            $areaID = $_SESSION["admin"]['areaID'];
+                            if($areaID){
+                                $tmp = $areaID.",".trim(getIdEnumAll($areaID),",");
                                 if($v['rel_table']=="arctype"){
                                     $map['id'] = array ('in', explode ( ',', $tmp ) );
                                 }else{
-                                   $map['typeid'] = array ('in', explode ( ',', $tmp ) );
-                                }
+                                       $map['areaID'] = array ('in', explode ( ',', $tmp ) );
+                                    }
                             }
+                            if($v['fieldname'] == "operatorID"){ //admin表
+                                $map = array();
+                                $map['userid'] = array('eq',$_SESSION["admin"]['userid']);
+                            }
+
 
                             $tmp1 = '';
                             if($v['rel_table'] && $v['rel_field']){

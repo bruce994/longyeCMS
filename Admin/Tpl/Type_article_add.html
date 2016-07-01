@@ -245,14 +245,13 @@ function checked_city<?php echo $v['id'];?>(){
 
                             $map['recycle'] = array("eq",0);
                             
-                            $typeid = $_SESSION["admin"]['typeid'];
-                            if($typeid){
-                                $tmp = $typeid.getType2($typeid);
+                            $areaID = $_SESSION["admin"]['areaID'];
+                            if($areaID){
+                                $tmp = $areaID.",".trim(getIdEnumAll($areaID),",");
                                 if($v['rel_table']=="arctype"){
                                     $map['id'] = array ('in', explode ( ',', $tmp ) );
                                 }else{
-                                       $map['typeid'] = array ('in', explode ( ',', $tmp ) );
-
+                                       $map['areaID'] = array ('in', explode ( ',', $tmp ) );
                                     }
                             }
                             if($v['fieldname'] == "operatorID"){ //admin表
