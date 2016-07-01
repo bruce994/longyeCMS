@@ -464,9 +464,9 @@ function fieldValue($value,$typeid,$rel_table='',$rel_field=''){
    if(!empty($rel_table) && !empty($rel_field)){
       $relt = M($rel_table);
       $pk = $relt->getPk ();
-      $rel = M($rel_table)->where($pk."='".$value."'")->field($pk.",".$rel_field)->find();
+      $rel = M($rel_table)->where($pk."='".$value."'")->field($pk.",".$rel_field.",areaID")->find();
       if($rel){
-        $value = '<span class="badge bg-light-blue">'.$value.'</span><span class="badge bg-yellow">'.$rel[$rel_field].'</span>';
+        $value = '<span class="badge bg-yellow">'.$rel[$rel_field].'</span><span class="badge bg-green">'.getEnum22($rel['areaID']).'</span>';
       }
    }
    return $value;

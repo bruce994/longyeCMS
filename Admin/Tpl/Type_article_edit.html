@@ -256,13 +256,13 @@ function checked_city<?php echo $v['id'];?>(){
                             if($v['rel_table'] && $v['rel_field']){
                                $relt = M($v['rel_table']);
                                $pk = $relt->getPk ();
-                               $rel = M($v['rel_table'])->where($map)->field($pk.",".$v['rel_field'])->select();
+                               $rel = M($v['rel_table'])->where($map)->field($pk.",".$v['rel_field'].",areaID")->select();
                                foreach ($rel as $v1) {
                                   $tmp2 = '';
                                   if($v1[$pk] == $addon[$v['fieldname']]){
                                     $tmp2 = 'selected';
                                   }
-                                  $tmp1.= '<option value="'.$v1[$pk].'"'.$tmp2.'>'.$v1[$v['rel_field']].'</option>';
+                                  $tmp1.= '<option value="'.$v1[$pk].'"'.$tmp2.'>'.getEnum22($v1['areaID']).$v1[$v['rel_field']].'</option>';
                                }
                             }else{
                               $tmps = explode(',', $v['fielddefault']);
