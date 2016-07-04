@@ -86,6 +86,10 @@ public function delete() {
 				}
 
 
+
+
+
+
 				// if(!empty($_GET['typeid'])){
 				// 	 $map['typeid'] = array('eq',$_GET['typeid']);
     //             }else{
@@ -109,7 +113,13 @@ public function delete() {
 					 foreach($channelField as $v){
 						if($v['issearch'] == 1){
 							if(!empty($_GET[$v['fieldname']])){
-								$map[$v['fieldname']] = array('eq',$_GET[$v['fieldname']]);
+								if($v['isLink'] && $v['isLinkType'] == "nativeplace"){
+							  	  $areas = $_GET[$v['fieldname']].",".trim(getIdEnumAll($_GET[$v['fieldname']]),",");
+			  	    	  		  $map[$v['fieldname']] = array ('in', explode ( ',', $areas ) );
+								}else{
+									$map[$v['fieldname']] = array('eq',$_GET[$v['fieldname']]);									
+								}
+
 							}
 						}
 					 }

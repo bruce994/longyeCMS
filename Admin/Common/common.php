@@ -445,7 +445,9 @@ function getEnum2_link($id=0){
 
 
 
-function fieldValue($value,$typeid,$rel_table='',$rel_field=''){
+function fieldValue($value,$channelField){
+  $typeid = $channelField['typeid'];
+
    switch ($typeid) {
        case '5':
            $value = strtolower($value);
@@ -461,6 +463,13 @@ function fieldValue($value,$typeid,$rel_table='',$rel_field=''){
            # code...
            break;
    }
+
+   if($channelField['isLink'] && $channelField['isLinkType'] == "nativeplace"){
+        $value = getEnum22($value);
+   }
+
+   $rel_table = $channelField['rel_table'];
+   $rel_field = $channelField['rel_field'];
    if(!empty($rel_table) && !empty($rel_field)){
       $relt = M($rel_table);
       $pk = $relt->getPk ();
@@ -530,7 +539,10 @@ EOF;
 
            break;
        default:
+
            $value = '<input type="text" class="form-control" name="'.$name.'" value="'.$_REQUEST[$name].'">';
+
+
            break;
    }
    

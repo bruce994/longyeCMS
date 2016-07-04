@@ -108,7 +108,7 @@
                           <tr>
                              <td>{$vo['aid']}</td>
                               <volist id="field" name="channelField">
-                              <td>{:fieldValue($vo[$field['fieldname']],$field['typeid'],$field['rel_table'],$field['rel_field'])}</td>
+                              <td>{:fieldValue($vo[$field['fieldname']],$field)}</td>
                               </volist>
                           </tr>
                         </volist>                    

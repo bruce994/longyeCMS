@@ -109,7 +109,7 @@
                               <input name="id" value="{$vo['aid']}" type="checkbox" onclick="addids(this)"></td>
                              <td>{$vo['aid']}</td>
                               <volist id="field" name="channelField">
-                              <td>{:fieldValue($vo[$field['fieldname']],$field['typeid'],$field['rel_table'],$field['rel_field'])}</td>
+                              <td>{:fieldValue($vo[$field['fieldname']],$field)}</td>
                               </volist>
                               <td>
                                <a data-toggle="modal" data-target="#lc_confirm" onclick="lr_confirm('确定恢复？','{:U("Type/article_restore",array("id"=>$vo['aid'],"channel"=>$vo['channel']))}');"><i class="fa fa-fw  fa-mail-reply"></i></a> | <a data-toggle="modal" data-target="#lc_confirm" onclick="lr_confirm('彻底删除？','{:U("Type/complete_delete",array("id"=>$vo['aid'],"channel"=>$vo['channel']))}');"><i class="fa fa-fw fa-remove"></i></a>

@@ -111,7 +111,10 @@
                             
                             <eq name="v.isLinkType" value="nativeplace">
 
-<input type="text" id="<?php echo $v['fieldname'];?>"  name="<?php echo $v['fieldname'];?>"  class="form-control <?php if($v['check_empty']){echo "required";} ?>"  value="<?php echo $v['fielddefault'];?>" data-toggle="modal" data-target="#myModal<?php echo $v['id'];?>" >
+ <input  type="hidden" id="<?php echo $v['fieldname'];?>"  name="<?php echo $v['fieldname'];?>"  value=""  >
+<input type="text" id="showAreaText<?php echo $v['fieldname'];?>" class="form-control <?php if($v['check_empty']){echo "required";} ?>"  value=""  data-toggle="modal" data-target="#myModal<?php echo $v['id'];?>" >
+
+
 
  <!--area-->
   <div id="myModal<?php echo $v['id'];?>" class="modal fade" tabindex="-1" role="dialog">
@@ -204,11 +207,14 @@ function checked_city<?php echo $v['id'];?>(){
   $("#ryynetArea<?php echo $v['id'];?> select option:selected").each(function() {
     if($( this ).val() > 1) {
         tmp += $( this ).text(); 
+        $("#<?php echo $v['fieldname'];?>").val($( this ).val()); //保存最后选择地区
     }
   });    
-  $("#<?php echo $v['fieldname'];?>").val(tmp);
+  $("#showAreaText<?php echo $v['fieldname'];?>").val(tmp);
   $('#myModal<?php echo $v['id'];?>').modal('hide');
-
+  if(tmp == ''){
+     $("#<?php echo $v['fieldname'];?>").val(0);
+  }
 }
 
 </script>  
