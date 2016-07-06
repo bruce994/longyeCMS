@@ -249,6 +249,7 @@ function checked_city<?php echo $field['id'];?>(){
                             <th>{$field['title']}</th>
                           </eq>
                         </volist>
+                        <th>添加时间</th>
                         <th>操作</th>
                       </tr>
                     </thead>
@@ -262,6 +263,7 @@ function checked_city<?php echo $field['id'];?>(){
                                   <td>{:fieldValue($vo[$field['fieldname']],$field)}</td>
                                 </eq>
                               </volist>
+                              <td>{$vo.addtime|date='Y-m-d H:i',###}</td>
                               <td>
                                 <a title="编辑"
                                     href="{:U("Type/article_edit",array("id"=>$vo['aid'],"channel"=>$_GET['channel'],"ss"=>3))}"><i class="fa fa-fw fa-edit"></i></a> | <a data-toggle="modal" data-target="#lc_confirm" onclick="lr_confirm('确定删除？','{:U("Type/article_delete",array("id"=>$vo['aid'],"channel"=>$vo['channel']))}');"><i class="fa fa-fw fa-remove"></i></a> | 

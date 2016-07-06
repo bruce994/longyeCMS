@@ -511,8 +511,18 @@ function checked_city(){
 
 
 
+              <div class="form-group">
+              <label>添加时间</label>
+              <input type="text" name="addtime" id="addtime" class="form-control " value="{:date("Y-d-m H:i")}">
+              </div>
+              <script>
+                $(function () {
+                  //Date range picker with time picker
+                  $('#addtime').daterangepicker({singleDatePicker: true, timePickerIncrement: 1,timePicker: true,timePicker12Hour:false, format: 'YYYY-MM-DD HH:mm'});
+                });
+              </script>
 
-
+              
 
 
                   </div><!-- /.box-body -->
@@ -542,12 +552,7 @@ function checked_city(){
   <script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js"></script>
   <!-- daterange picker -->
   <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css">
-    <script>
-      $(function () {
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({singleDatePicker: true, timePickerIncrement: 1,timePicker: true,timePicker12Hour:false, format: 'YYYY-MM-DD hh:mm'});
-      });
-    </script>
+
 
 
 <script src="__PUBLIC__/static/artDialog/jquery.artDialog.js?skin=default"></script>

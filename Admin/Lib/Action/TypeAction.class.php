@@ -460,6 +460,8 @@ public function article_update(){
 			}
 			$addon->userid = $_SESSION["admin"]['userid'];
 			$addon->userip = get_client_ip();
+			$addon->addtime = strtotime($this->_param("addtime"));
+
 			if($result	 =	 $addon->save()) {
 				$this->success('更新成功！');
 			}else{
@@ -564,6 +566,8 @@ public function article_insert(){
 			$addon->userip = get_client_ip();
 			$addon->typeid = intval($_SESSION["admin"]['typeid']);
 			$addon->userid = $_SESSION["admin"]['userid'];
+			$addon->addtime = strtotime($this->_param("addtime"));
+
 			if($result	 =	 $addon->add()) {
 				$this->success('添加成功！');
 			}else{

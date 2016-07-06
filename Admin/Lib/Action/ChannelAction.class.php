@@ -52,6 +52,7 @@ $sql2 = <<<EOF
 			  `bind_aid` int(11) NOT NULL DEFAULT '0',
 			  `userid` char(30) NOT NULL DEFAULT '',
 			  `areaID` int(11) NOT NULL DEFAULT '0',
+			  `addtime` int(11) NOT NULL DEFAULT '0',
 			  `typeid` int(11) NOT NULL DEFAULT '0',
 			  `channel` int(11) NOT NULL DEFAULT '0',
 			  `redirecturl` varchar(255) NOT NULL DEFAULT '',

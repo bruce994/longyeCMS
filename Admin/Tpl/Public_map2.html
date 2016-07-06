@@ -39,7 +39,18 @@ if(count($channel)>0){
             $map['areaID'] = array ('in', explode ( ',', $areas ) );
       }
 
-       $addon = M("Addon".$ch['id'])->where($map)->limit("0,200")->select();
+      if($_GET['year']){
+          $tmp = $_GET['year']."-01-01";
+          $tmp2 = intval($_GET['year'])+1 ."-01-01";
+          $map['addtime'] = array(array('egt',strtotime($tmp)),array('elt',strtotime($tmp2)));
+      }else{
+          $tmp = date("Y")."-01-01";
+          $tmp2 = intval(date("Y"))+1 ."-01-01";
+          $map['addtime'] = array(array('egt',strtotime($tmp)),array('elt',strtotime($tmp2)));
+      }
+
+
+       $addon = M("Addon".$ch['id'])->where($map)->limit("0,200")->order("addtime desc")->select();
        foreach ($addon as $add) {
         if($add['longitude'] && $add['latitude']){
 
