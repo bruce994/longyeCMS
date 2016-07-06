@@ -318,6 +318,10 @@ le">详细内容</h4></div>
                                              {$field.title} : {:fieldValue($vo[$field['fieldname']],$field)}
                                          </div>
                                  </volist>
+                                <div class="col-md-2" style="background-color:lightcyan;" >
+                                     添加时间 : {$vo.addtime|date='Y-m-d H:i',###}
+                                </div>
+
                              </div>
 
                              <?php 
@@ -337,6 +341,9 @@ le">详细内容</h4></div>
                                                    {$field.title} : {:fieldValue($vo[$field['fieldname']],$field)}
                                                </div>
                                        </volist>
+                                      <div class="col-md-2" style="background-color:lightcyan;" >
+                                           添加时间 : {$vo.addtime|date='Y-m-d H:i',###}
+                                      </div>
                                    </div>
                                <?php } ?>
                             <?php      
