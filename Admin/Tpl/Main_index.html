@@ -12,6 +12,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="__PUBLIC__/misc/font-awesome.min.css">
     <!-- Ionicons -->
+
+    <link rel="stylesheet" href="__PUBLIC__/plugins/morris/morris.css">
+
     <link rel="stylesheet" href="__PUBLIC__/misc/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="__PUBLIC__/dist/css/AdminLTE.min.css">
@@ -63,14 +66,327 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            {$Think.config.SITENAME}
-            <small><?php echo date("Y-m-d H:i:s");?></small>
+            曲线图
+            <small>列表</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="#">曲线图</a></li>
           </ol>
         </section>
-      
+
+        <!-- Main content -->
+        <section class="content">
+
+<div class="row">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3>150</h3>
+                  <p>十个全覆盖</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{:U("Chart/index")}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <p>农村人口信息</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{:U("Chart/index",array("t"=>1))}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>44</h3>
+                  <p>农林牧大数据</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="{:U("Chart/index",array("t"=>2))}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3>65</h3>
+                  <p>第一产业大数据</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="{:U("Chart/index",array("t"=>3))}" class="small-box-footer">更多 <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div>
+
+
+
+        <?php if(empty($_GET['t'])) {  ?>
+        <!-- Main row -->
+          <div class="row">
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">十个全覆盖趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div id="hero-graph" class="graph" style="height: 350px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+
+          <script type="text/javascript">
+
+          $(function () {
+
+            "use strict";
+
+  
+           var tax_data = [
+                 {"period": "2013", "licensed": 3407, "sorned": 660,"a1":11333},
+                 {"period": "2012", "licensed": 3351, "sorned": 629,"a1":1122},
+                 {"period": "2011", "licensed": 3269, "sorned": 618,"a1":111},
+                 {"period": "2010", "licensed": 3246, "sorned": 661,"a1":115},
+                 {"period": "2009", "licensed": 3171, "sorned": 676,"a1":151},
+                 {"period": "2008", "licensed": 3155, "sorned": 681,"a1":11},
+                 {"period": "2007", "licensed": 3226, "sorned": 620,"a1":51},
+                 {"period": "2006", "licensed": 3245, "sorned": null,"a1":141},
+                 {"period": "2005", "licensed": 3289, "sorned": null,"a1":10331}
+            ];
+
+              //Make the dashboard widgets sortable Using jquery UI
+              $(".connectedSortable").sortable({
+                placeholder: "sort-highlight",
+                connectWith: ".connectedSortable",
+                handle: ".box-header, .nav-tabs",
+                forcePlaceholderSize: true,
+                zIndex: 999999
+              });
+              $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
+
+
+              var line = new Morris.Line({
+                element: 'hero-graph',
+                resize: true,
+                data: tax_data,
+                xkey: 'period',
+                ykeys: ['licensed'],
+                labels: ['数据'],
+                lineColors: ['#efefef'],
+                lineWidth: 2,
+                hideHover: 'auto',
+                gridTextColor: "#fff",
+                gridStrokeWidth: 0.4,
+                pointSize: 4,
+                pointStrokeColors: ["#efefef"],
+                gridLineColor: "#efefef",
+                gridTextFamily: "Open Sans",
+                gridTextSize: 10
+              });
+
+          });
+          </script>
+        <?php }  ?>
+
+
+
+        <?php if($_GET['t'] == 1) {  ?>
+        <!-- Main row -->
+          <div class="row">
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">农村人口信息趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div id="hero-graph" class="graph" style="height: 350px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+
+
+
+          <script type="text/javascript">
+
+          $(function () {
+
+            "use strict";
+
+           var tax_data = [
+                 {"period": "2013", "licensed": 3407, "sorned": 660,"a1":1233},
+                 {"period": "2012", "licensed": 3351, "sorned": 529,"a1":113},
+                 {"period": "2011", "licensed": 3269, "sorned": 418,"a1":111},
+                 {"period": "2010", "licensed": 3246, "sorned": 361,"a1":115},
+                 {"period": "2009", "licensed": 3171, "sorned": 76,"a1":151},
+                 {"period": "2008", "licensed": 3155, "sorned": 681,"a1":11},
+                 {"period": "2007", "licensed": 3226, "sorned": 720,"a1":51},
+                 {"period": "2006", "licensed": 3245, "sorned": null,"a1":141},
+                 {"period": "2005", "licensed": 3289, "sorned": null,"a1":331}
+            ];
+            Morris.Line({
+              element: 'hero-graph',
+              data: tax_data,
+              xkey: 'period',
+              ykeys: ['licensed', 'sorned','a1'],
+              labels: ['阿鲁科尔沁旗天山镇', '阿鲁科尔沁旗天山镇三山村','三口镇']
+            });
+
+          });
+          </script>
+        <?php }  ?>
+
+
+
+
+
+
+        <?php if($_GET['t'] == 2) {  ?>
+        <!-- Main row -->
+          <div class="row">
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">农林牧大数据趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div id="hero-graph" class="graph" style="height: 350px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+          <script type="text/javascript">
+
+          $(function () {
+
+            "use strict";
+
+           var tax_data = [
+                 {"period": "2013", "licensed": 3407, "sorned": 660,"a1":11333},
+                 {"period": "2012", "licensed": 3351, "sorned": 629,"a1":1122},
+                 {"period": "2011", "licensed": 3269, "sorned": 618,"a1":111},
+                 {"period": "2010", "licensed": 3246, "sorned": 661,"a1":115},
+                 {"period": "2009", "licensed": 3171, "sorned": 676,"a1":151},
+                 {"period": "2008", "licensed": 3155, "sorned": 681,"a1":11},
+                 {"period": "2007", "licensed": 3226, "sorned": 620,"a1":51},
+                 {"period": "2006", "licensed": 3245, "sorned": null,"a1":141},
+                 {"period": "2005", "licensed": 3289, "sorned": null,"a1":10331}
+            ];
+            Morris.Line({
+              element: 'hero-graph',
+              data: tax_data,
+              xkey: 'period',
+              ykeys: ['licensed', 'sorned','a1'],
+              labels: ['松树', '柳树','杨树']
+            });
+
+          });
+          </script>
+        <?php }  ?>
+
+
+
+
+
+
+
+        <?php if($_GET['t'] == 3) {  ?>
+        <!-- Main row -->
+          <div class="row">
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">第一产业大数据趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div id="hero-graph" class="graph" style="height: 350px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+          <script type="text/javascript">
+
+          $(function () {
+
+            "use strict";
+
+           var tax_data = [
+                 {"period": "2013", "licensed": 3407, "sorned": 60,"a1":115},
+                 {"period": "2012", "licensed": 3351, "sorned": 69,"a1":112},
+                 {"period": "2011", "licensed": 3269, "sorned": 68,"a1":11},
+                 {"period": "2010", "licensed": 3246, "sorned": 61,"a1":115},
+                 {"period": "2009", "licensed": 3171, "sorned": 676,"a1":51},
+                 {"period": "2008", "licensed": 3155, "sorned": 61,"a1":11},
+                 {"period": "2007", "licensed": 3226, "sorned": 60,"a1":51},
+                 {"period": "2006", "licensed": 3245, "sorned": null,"a1":11},
+                 {"period": "2005", "licensed": 3289, "sorned": null,"a1":1}
+            ];
+            Morris.Line({
+              element: 'hero-graph',
+              data: tax_data,
+              xkey: 'period',
+              ykeys: ['licensed', 'sorned','a1'],
+              labels: ['牛', '羊','马']
+            });
+
+          });
+          </script>
+        <?php }  ?>
+
+
+
+        </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
       
@@ -78,6 +394,36 @@
 
      
     </div><!-- ./wrapper -->
+
+
+
+  <!-- date-range-picker -->
+  <script src="__PUBLIC__/misc/moment.min.js"></script>
+  <script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css">
+
+
+
+<!-- jQuery UI 1.11.4 -->
+<script src="__PUBLIC__/js/jquery-ui.min.js"></script>
+<!-- Morris.js charts -->
+<script src="__PUBLIC__/js/raphael-min.js"></script>
+<script src="__PUBLIC__/plugins/morris/morris.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   </body>
