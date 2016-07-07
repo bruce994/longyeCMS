@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$Think.config.SITENAME}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="__PUBLIC__/misc/font-awesome.min.css">
+    <!-- Ionicons -->
+
+    <link rel="stylesheet" href="__PUBLIC__/plugins/morris/morris.css">
+
+    <link rel="stylesheet" href="__PUBLIC__/misc/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="__PUBLIC__/dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="__PUBLIC__/misc/html5shiv.min.js"></script>
+        <script src="__PUBLIC__/misc/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      .color-palette {
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+      }
+      .color-palette-set {
+        margin-bottom: 15px;
+      }
+      .color-palette span {
+        display: none;
+        font-size: 12px;
+      }
+      .color-palette:hover span {
+        display: block;
+      }
+      .color-palette-box h4 {
+        position: absolute;
+        top: 100%;
+        left: 25px;
+        margin-top: -40px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+        display: block;
+        z-index: 7;
+      }
+    </style>
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <include file="Public:head" />
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            曲线图
+            <small>列表</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="#">曲线图</a></li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+
+             
+
+                <div class="box-body">
+
+
+
+     <!-- Main row -->
+          <div class="row">
+
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">苹果树月趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div class="chart" id="line-chart" style="height: 250px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+
+
+     <!-- Main row -->
+          <div class="row">
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-12 connectedSortable">
+              <!-- solid sales graph -->
+              <div class="box box-solid bg-teal-gradient">
+                <div class="box-header">
+                  <i class="fa fa-th"></i>
+                  <h3 class="box-title">苹果树年趋势图</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body border-radius-none">
+                  <div id="hero-graph" class="graph" style="height: 350px;"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </section><!-- right col -->
+
+          </div><!-- /.row (main row) -->
+
+
+
+
+
+                </div><!-- /.box-body -->
+
+              
+
+              </div><!-- /.box -->
+
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      
+    <include file="Public:footer" />
+
+     
+    </div><!-- ./wrapper -->
+
+
+
+  <!-- date-range-picker -->
+  <script src="__PUBLIC__/misc/moment.min.js"></script>
+  <script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css">
+
+
+<script type="text/javascript" src="{:U("Chart/getAPI",array("channel"=>"79","fieldName"=>"lypinzhong","fieldValue"=>"lymianji","where"=>"其它|柳树"))}"></script>
+
+<!-- jQuery UI 1.11.4 -->
+<script src="__PUBLIC__/js/jquery-ui.min.js"></script>
+<!-- Morris.js charts -->
+<script src="__PUBLIC__/js/raphael-min.js"></script>
+<script src="__PUBLIC__/plugins/morris/morris.min.js"></script>
+
+<script type="text/javascript">
+
+$(function () {
+
+  "use strict";
+
+  //Make the dashboard widgets sortable Using jquery UI
+  $(".connectedSortable").sortable({
+    placeholder: "sort-highlight",
+    connectWith: ".connectedSortable",
+    handle: ".box-header, .nav-tabs",
+    forcePlaceholderSize: true,
+    zIndex: 999999
+  });
+  $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
+
+
+  var line = new Morris.Line({
+    element: 'line-chart',
+    resize: true,
+    data: memberCount,
+    xkey: 'y',
+    ykeys: ['item1'],
+    labels: ['<?php echo empty($_GET['name'])?'其它':$_GET['name']; ?>'],
+    lineColors: ['#efefef'],
+    lineWidth: 2,
+    hideHover: 'auto',
+    gridTextColor: "#fff",
+    gridStrokeWidth: 0.4,
+    pointSize: 4,
+    pointStrokeColors: ["#efefef"],
+    gridLineColor: "#efefef",
+    gridTextFamily: "Open Sans",
+    gridTextSize: 10
+  });
+
+
+
+
+
+
+
+ var tax_data = [
+       {"period": "2013", "licensed": 3407, "sorned": 660,"a1":11333},
+       {"period": "2012", "licensed": 3351, "sorned": 629,"a1":1122},
+       {"period": "2011", "licensed": 3269, "sorned": 618,"a1":111},
+       {"period": "2010", "licensed": 3246, "sorned": 661,"a1":115},
+       {"period": "2009", "licensed": 3171, "sorned": 676,"a1":151},
+       {"period": "2008", "licensed": 3155, "sorned": 681,"a1":11},
+       {"period": "2007", "licensed": 3226, "sorned": 620,"a1":51},
+       {"period": "2006", "licensed": 3245, "sorned": null,"a1":141},
+       {"period": "2005", "licensed": 3289, "sorned": null,"a1":10331}
+  ];
+  Morris.Line({
+    element: 'hero-graph',
+    data: tax_data,
+    xkey: 'period',
+    ykeys: ['licensed', 'sorned','a1'],
+    labels: ['松树', '柳树','杨树']
+  });
+
+
+
+
+
+
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
