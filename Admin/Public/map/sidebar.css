@@ -1,0 +1,29 @@
+a { outline: none; }
+a:active { outline: none; }
+#sideBarRight{ text-align:left; }
+#Div2 { text-align:left; }
+
+#sideBarRight{ position: absolute; width: auto; height: 880px; top: 4%; right:0px;  }
+#Div2 { position: absolute; width: auto; height: auto; top:10%; right:0px;  }
+#aFloatTools_Show,#a1,#a3 { float:left; height:50px; width:50px; }
+#aFloatTools_Show,#a1,#a3 img { border:0px solid #FFFFFF; }
+#aFloatTools_Hide,#a2,#a5 { float:left; height:50px; width:50px; }
+#aFloatTools_Hide,#a2,#a5 img { border:0px solid #FFFFFF; }
+#sideBarContents,#Div3,#Div1,#Div5 {  float:left; overflow:hidden !important; width:600px; height:100%; background-color:#fff; padding:10px;}
+
+#sideBarContentsInner,#Div4 { height:100%;background-color:#fff; }
+@media \0screen\,screen\9 {/* 只支持IE6、7、8 */
+  #sideBarRight,#Div2{
+    background-color:#0088cc;
+    filter:Alpha(opacity=50);
+    position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+    }
+    #sideBarContentsInner,#Div4{
+    background-color:#0088cc;
+    filter:Alpha(opacity=50);
+    position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+    }
+  }
+/*.toumingColor{background: none;color:#fff;background-color:none;}*/
