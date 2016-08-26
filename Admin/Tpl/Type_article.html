@@ -82,9 +82,11 @@
                 <div class="box-header">
 
                     <form action="{:U("Type/article",array("channel"=>$_GET['channel'],"typeid"=>$_GET['typeid'],"ss"=>3))}" method="get">
-
+                    <div class="row">
                         <volist id="field" name="channelField">
+
                           <eq name="field.issearch" value="1">
+                            <div class="col-md-2">
                             <?php $issearch = 1;?>
                             <div class="form-group">
                               <label> {$field['title']}:  </label>
@@ -98,7 +100,7 @@
 
  <!--area-->
   <div id="myModal<?php echo $field['id'];?>" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-dialog modal-sm" role="document" style="width:15%;">
           <div class="modal-content">
               <div class="modal-body" style="text-align:center;">
                 <div class="row">
@@ -205,11 +207,13 @@ function checked_city<?php echo $field['id'];?>(){
                           {:inputField($field['fieldname'],$field['typeid'],$field['fielddefault'])}
 </if>
 
-
-
                             </div>
+                             </div>
                           </eq>
+                         
                         </volist>
+</div>
+
 
                         <eq name="issearch" value="1">
                           <div style="float:left;margin:0 8px 0 1px">
