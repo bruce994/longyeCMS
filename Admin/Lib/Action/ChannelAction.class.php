@@ -116,6 +116,10 @@ EOF;
 			    //读取数据库模块列表生成菜单项
 				$model = M ("Channeltype" );
 
+
+				$_REQUEST ['_order'] = "sort";
+				$_REQUEST ['_sort'] = "asc";
+
 				//排序字段 默认为主键名
 				if (!empty ( $_REQUEST ['_order'] )) {
 					$order = $_REQUEST ['_order'];

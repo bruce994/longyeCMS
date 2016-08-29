@@ -98,6 +98,7 @@
                         <th>频道名称</th>
                         <th>附加表名</th>
                         <th>关联频道</th>
+                        <th>排序</th>
                         <th>操作</th>
                       </tr>
                     </thead>
@@ -115,6 +116,7 @@
                               echo $tmp['typename'];
                            ?>
                          </td>
+                         <td>{$vo.sort}</td>
                           <td>
                             <a href="{:U("Channel/fmanage",array("id"=>$vo['id'],"ss"=>7))}"><i class="fa fa-fw fa-plus"></i>字段管理</a> | 
                             <a title="编辑" href="{:U("Channel/edit",array("id"=>$vo['id'],"ss"=>7))}"><i class="fa fa-fw fa-edit"></i></a> | <a data-toggle="modal" data-target="#lc_confirm" onclick="lr_confirm('确定删除？<br/><span class=\\'label label-danger\\'>注意会清空该频道下所有数据</span>','{:U("Channel/delete",array("id"=>$vo['id']))}')" title="删除"><i class="fa fa-fw fa-remove"></i></a>

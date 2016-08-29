@@ -107,7 +107,7 @@
               </a>
               <ul class="treeview-menu">
                 <?php
-                 $tmp_m = M("Channeltype")->where("reid=0")->field("id,typename")->select(); 
+                 $tmp_m = M("Channeltype")->where("reid=0")->field("id,typename")->order("sort asc")->select(); 
                  foreach ($tmp_m as $value) {
                 ?>
                   <li><a href="{:U("Type/article",array("channel"=>$value['id'],"ss"=>3))}"><i class="fa fa-circle-o"></i><?php echo $value['typename'];?></a></li>
