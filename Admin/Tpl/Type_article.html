@@ -140,7 +140,9 @@
                             <div class="col-md-2">
                               <?php
                                 $t_map = array();
-                                $t_map['addtime'] = array(array('egt',strtotime($_GET['c_startdate'])),array('elt',strtotime($_GET['c_enddate'])));
+                                if(!empty($_GET['c_startdate']) && !empty($_GET['c_enddate']) ){
+                                  $t_map['addtime'] = array(array('egt',strtotime($_GET['c_startdate'])),array('elt',strtotime($_GET['c_enddate'])));
+                                }
                                 echo M("Addon".$field['chid'])->where($t_map)->sum($field['fieldname']);
                               ?>
                             </div>
