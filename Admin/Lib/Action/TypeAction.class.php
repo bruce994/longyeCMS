@@ -852,6 +852,25 @@ public function article_insert_auto(){
                 $data[] = $tmp1;
             }
 
+		    
+		    //统计  
+		    $isCount = false;           
+	        $list1[]="总计";
+			foreach ($channelField as $value) {
+				if($value['isCount'] == 1){
+					$isCount = true;
+                    $list1[] = M("Addon".$value['chid'])->sum($value['fieldname']);
+				}
+				else{
+					$list1[] = '';							
+				}
+			}
+		   if($isCount){
+              $data[] = $list1;
+		   }
+		   //END
+
+
 
             require_once (dirname(__FILE__)."/../../../Public/excel/php-excel.class.php");
             $xls = new Excel_XML('UTF-8', false, 'data');
