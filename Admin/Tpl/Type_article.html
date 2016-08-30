@@ -74,13 +74,92 @@
 
         <!-- Main content -->
         <section class="content">
+
+
+            <?php
+              $isCount = false;
+              foreach ($channelField as $tt) {
+                if($tt['isCount']){
+                  $isCount = true;
+                  break;
+                }
+              }
+            ?>
+
+
+            <?php if($isCount){ ?>
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">数据统计</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                  <div class="box-body">
+                    <div class="table-responsive">
+
+                    <form action="{:U("Type/article",array("channel"=>$_GET['channel'],"typeid"=>$_GET['typeid'],"ss"=>3))}" method="get">
+                      <div class="row">
+                        <div class="col-md-2">
+                          开始时间：
+                          <input type="text" class="" id="c_startdate" name="c_startdate" value="{:$_GET['c_startdate']}">
+                        </div>
+                        <div class="col-md-2">
+                          结束时间：<input type="text" class="" id="c_enddate" name="c_enddate" value="{:$_GET['c_enddate']}">
+                        </div>
+                        <div class="col-md-1">
+                           <input type="submit" value="查询" class="btn pull-right btn-sm" />
+                        </div>
+                      </div>                      
+                    </form>
+
+                  <!-- date-range-picker -->
+                  <script src="__PUBLIC__/misc/moment.min.js"></script>
+                  <script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js"></script>
+                  <!-- daterange picker -->
+                  <link rel="stylesheet" href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css">
+
+                  <link rel="stylesheet" href="__PUBLIC__/misc/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+                    <script>
+                      $(function () {
+                        //Date range picker with time picker
+                        $('#c_startdate').daterangepicker({singleDatePicker: true, timePickerIncrement: 1,timePicker: false, format: 'YYYY-MM-DD'});
+                        $('#c_enddate').daterangepicker({singleDatePicker: true, timePickerIncrement: 1,timePicker: false, format: 'YYYY-MM-DD'});
+                      });
+                    </script>
+
+
+                     <volist id="field" name="channelField">
+                          <eq name="field.isCount" value="1">
+                          <div class="row">
+                            <div class="col-md-2">
+                              {$field.title}:
+                            </div>
+                            <div class="col-md-2">
+                              <?php
+                                $t_map = array();
+                                $t_map['addtime'] = array(array('egt',strtotime($_GET['c_startdate'])),array('elt',strtotime($_GET['c_enddate'])));
+                                echo M("Addon".$field['chid'])->where($t_map)->sum($field['fieldname']);
+                              ?>
+                            </div>
+                          </div>
+                          </eq>
+                        </volist>
+                      </div>
+                  </div>
+               </div>
+                <?php } ?>
+
+
+
+
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
 
-
                 <div class="box-header">
-
                     <form action="{:U("Type/article",array("channel"=>$_GET['channel'],"typeid"=>$_GET['typeid'],"ss"=>3))}" method="get">
                     <div class="row">
                         <volist id="field" name="channelField">
@@ -243,6 +322,16 @@ function checked_city<?php echo $field['id'];?>(){
                 </div><!-- /.box-header -->
 
 
+
+
+
+
+
+
+
+
+
+
                 <div class="box-body">
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
@@ -388,6 +477,7 @@ le">详细内容</h4></div>
                 <!--END  page-->
 
               </div><!-- /.box -->
+
 
             </div><!-- /.col -->
           </div><!-- /.row -->
