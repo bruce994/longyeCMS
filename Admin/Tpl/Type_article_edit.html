@@ -404,8 +404,13 @@ $( document ).ready(function() {
   <?php 
     if($addon['areaID']){
       $area_id = $addon['areaID'];
+
+      $area_id_a = $_SESSION["admin"]['areaID'];
+      $nex_level = getIdEnumAll($area_id_a);
+      echo '<script>$(document ).ready(function() { showArea('.$area_id_a.',"ryynetArea",rank);});</script>';
     }else{
         $area_id = C('area');
+        echo '<script>$(document ).ready(function() { showArea(0,"ryynetArea",rank);});</script>';
     }
     $area = getEnum22($area_id);
   ?>
@@ -414,7 +419,7 @@ $( document ).ready(function() {
   <div class="form-group">
       <label>所在地区</label>                        
            <input  type="hidden" id="area"  name="areaID"  value="<?php echo $area_id;?>"  >
-           <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="<?php echo $area;?>"  data-toggle="modal" data-target="#myModalcity" >
+           <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="<?php echo $area;?>"  <?php if(empty($nex_level)){ ?> disabled <?php }else{ ?>  data-toggle="modal" data-target="#myModalcity" <?php } ?>  >
   </div>
  <!--area-->
   <div id="myModalcity" class="modal fade" tabindex="-1" role="dialog">
@@ -457,9 +462,6 @@ echo $fileContent;
 <script type="text/javascript">
 var rank = 1;
 
-$( document ).ready(function() {
-  showArea(0,"ryynetArea",rank);
-});
 
 function showArea(reid,ement,rank1){
 
