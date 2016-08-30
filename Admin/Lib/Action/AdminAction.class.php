@@ -12,7 +12,7 @@
 
 	public function update(){
 		  $P = D("Admin");
-          $fields = 'id,uname,areaID,status,picurl';
+          $fields = 'id,uname,areaID,status,picurl,channel';
           if(!empty($_POST['pwd'])){
                $fields .= ',pwd';
            }
@@ -23,6 +23,10 @@
 				if(!empty($_POST["pwd"])){
 					$P->pwd = md5($this->_param("pwd"));
 				}
+				$P->channel = implode(",", $this->_param("channel"));
+
+
+
 			    $this->assign ( 'jumpUrl', Cookie::get ( '_currentUrl_' ) );
 				// 写入帐号数据
 				if($result	 =	 $P->save()) {
@@ -46,6 +50,7 @@ public function insert(){
 		if(!$model->create()) {
 			$this->error($model->getError());
 		}else{
+			$model->channel = implode(",", $this->_param("channel"));
 			$model->pwd = md5($this->_param("pwd"));
 			if($result	 =	 $model->add()) {
 				$this->success('添加成功！');

@@ -109,10 +109,12 @@
                 <?php
                  $tmp_m = M("Channeltype")->where("reid=0")->field("id,typename")->order("sort asc")->select(); 
                  foreach ($tmp_m as $value) {
+                  if(strstr($_SESSION["admin"]['channel'], $value['id']) || $_SESSION["admin"]['areaID'] == 0 ){
                 ?>
                   <li><a href="{:U("Type/article",array("channel"=>$value['id'],"ss"=>3))}"><i class="fa fa-circle-o"></i><?php echo $value['typename'];?></a></li>
                 <?php
                   } 
+                    }
                 ?>
                   <li><a href="{:U("Map/index",array("ss"=>3))}"><i class="fa fa-map-marker"></i>地图查找</a></li>
                   <li><a href="{:U("Chart/index",array("ss"=>3))}"><i class="fa fa-bar-chart"></i>统计曲线图</a></li>
@@ -136,7 +138,7 @@
 
              -->          
 
-            <?php if(empty($_SESSION["admin"]['typeid'])) { ?>
+            <?php if(empty($_SESSION["admin"]['areaID'])) { ?>
 
             <li class="treeview <?php if($_GET['ss'] == 5){echo "active";} ?>">
               <a href="#">
