@@ -357,7 +357,7 @@ if($_POST['typeid'] == "0" || $_POST['typeid'] == "1"){
 }elseif ($_POST['typeid'] == "3") {
 	$cc = "int(11) NOT NULL DEFAULT '0'";
 }elseif ($_POST['typeid'] == "4") {
-	$cc = "decimal(8,2) NOT NULL DEFAULT '0.00'";
+	$cc = "decimal(8,4) NOT NULL DEFAULT '0.0000'";
 }elseif ($_POST['typeid'] == "5") {
 	$cc = "varchar(1000) NOT NULL DEFAULT ''";
 }elseif ($_POST['typeid'] == "6" || $_POST['typeid'] == "7" || $_POST['typeid'] == "8" || $_POST['typeid'] == "9") {
