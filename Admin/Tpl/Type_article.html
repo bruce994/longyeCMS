@@ -113,12 +113,12 @@
 
                         <div class="col-md-2">
                           所在地区：<input  type="hidden" id="area"  name="area"  value="<?php echo $_GET['area'];?>"  >
-                             <input readonly type="text" id="showAreaText"  name="showAreaText"  class="form-control"  value="<?php echo empty($_GET['area'])?"":getEnum22($_GET['area']);?>"  data-toggle="modal" data-target="#myModalcity" >
+                             <input readonly type="text" id="showAreaText"  name="showAreaText"  class=""  value="<?php echo empty($_GET['area'])?"":getEnum22($_GET['area']);?>"  data-toggle="modal" data-target="#myModalcity" >
                         </div>
 
  <!--area-->
   <div id="myModalcity" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-dialog modal-sm" role="document" style="width:15%;">
           <div class="modal-content">
               <div class="modal-body" style="text-align:center;">
                 <div class="row">
@@ -259,7 +259,7 @@ function checked_city(){
 
                                 if(!empty($_GET['area'])){
                                   $area_tt = $_GET['area'].",".trim(getIdEnumAll($_GET['area']),",");
-                                  $t_map['areaID'] = array(array ('in', explode ( ',',  $area_tt) ));
+                                  $t_map['areaID'] = array('in', explode ( ',',  $area_tt) );
                                 }
                                 echo M("Addon".$field['chid'])->where($t_map)->sum($field['fieldname']);
                               ?>
