@@ -847,7 +847,12 @@ public function article_insert_auto(){
             foreach ($voList as $v) {
             	$tmp1['ID'] = $v['aid'];
 				foreach ($channelField as $value) {
-					$tmp1[$value['fieldname']] = $v[$value['fieldname']];
+					//联动
+					if($value['isLink'] == "1" && $value['isLinkType'] == "nativeplace"){
+						$tmp1[$value['fieldname']] = getEnum22($v[$value['fieldname']]);
+					}else{
+						$tmp1[$value['fieldname']] = $v[$value['fieldname']];
+					}
 				}
                 $data[] = $tmp1;
             }
