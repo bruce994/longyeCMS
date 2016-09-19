@@ -252,6 +252,11 @@ function checked_city(){
                             </div>
                             <div class="col-md-2">
                               <?php
+                              
+                              if($field['type'] == 0){
+                                $tmp = M("Addon".$field['chid'])->field("GROUP_CONCAT(".$field['fieldname']." SEPARATOR ' + ') AS ff")->find();
+                                echo $tmp['ff'];
+                              }else{
                                 $t_map = array();
                                 if(!empty($_GET['c_startdate']) && !empty($_GET['c_enddate']) ){
                                   $t_map['addtime'] = array(array('egt',strtotime($_GET['c_startdate'])),array('elt',strtotime($_GET['c_enddate'])));
@@ -262,6 +267,7 @@ function checked_city(){
                                   $t_map['areaID'] = array('in', explode ( ',',  $area_tt) );
                                 }
                                 echo M("Addon".$field['chid'])->where($t_map)->sum($field['fieldname']);
+                              }
                               ?>
                             </div>
                           </div>
