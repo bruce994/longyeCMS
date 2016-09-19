@@ -253,8 +253,8 @@ function checked_city(){
                             <div class="col-md-2">
                               <?php
                               
-                              if($field['type'] == 0){
-                                $tmp = M("Addon".$field['chid'])->field("GROUP_CONCAT(".$field['fieldname']." SEPARATOR ' + ') AS ff")->find();
+                              if($field['typeid'] == 0){
+                                $tmp = M("Addon".$field['chid'])->field("GROUP_CONCAT(".$field['fieldname']." SEPARATOR '') AS ff")->find();
                                 echo $tmp['ff'];
                               }else{
                                 $t_map = array();
