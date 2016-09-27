@@ -102,7 +102,7 @@
 
             <li class="treeview <?php if($_GET['ss'] == 3){echo "active";} ?>" >
               <a href="#">
-                <i class="fa fa-table"></i><span>内容管理</span>
+                <i class="fa fa-table"></i><span>数据详情</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
@@ -140,21 +140,7 @@
 
             <?php if(empty($_SESSION["admin"]['areaID'])) { ?>
 
-            <li class="treeview <?php if($_GET['ss'] == 5){echo "active";} ?>">
-              <a href="#">
-                <i class="fa fa-recycle"></i><span>回收站</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <?php
-                 foreach ($tmp_m as $value) {
-                ?>
-                  <li><a href="{:U("Type/article_recycle",array("channel"=>$value['id'],"ss"=>5))}"><i class="fa fa-circle-o"></i><?php echo $value['typename'];?>(回收站)</a></li>
-                <?php
-                  } 
-                ?>
-              </ul>
-            </li>
+            
 
 
             <li class="treeview <?php if($_GET['ss'] == 6){echo "active";} ?>">
@@ -179,6 +165,28 @@
                 <li><a href="{:U("Channel/fmanage",array("ss"=>7))}"><i class="fa  fa-cube"></i>字段管理</a></li>
               </ul>
             </li>
+
+
+
+<li class="treeview <?php if($_GET['ss'] == 5){echo "active";} ?>">
+              <a href="#">
+                <i class="fa fa-recycle"></i><span>回收站</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <?php
+                 foreach ($tmp_m as $value) {
+                ?>
+                  <li><a href="{:U("Type/article_recycle",array("channel"=>$value['id'],"ss"=>5))}"><i class="fa fa-circle-o"></i><?php echo $value['typename'];?>(回收站)</a></li>
+                <?php
+                  } 
+                ?>
+              </ul>
+            </li>
+
+
+
+
             <?php } ?>
 
 

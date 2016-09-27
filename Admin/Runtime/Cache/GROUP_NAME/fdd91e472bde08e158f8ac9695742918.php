@@ -1,16 +1,16 @@
-
+<?php if (!defined('THINK_PATH')) exit();?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html>
 <head>
-	<title>用户登录_{$Think.config.SITENAME}</title>
+	<title>用户登录_<?php echo (C("SITENAME")); ?></title>
 	<meta http-equiv="x-ua-compatible" content="ie=8" /> 
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 </head>
 <body onkeydown="keyDownHandler(event);" onload="init();" bgcolor="white" style="overflow-y:hidden;text-align:center;">
 	<div style="text-align:left;position:absolute;left:50%;top:50%;border:0px solid red;width:1024px;height:550px;background:url(/Admin/Public/images/shouye/login3.png);margin-top:-275px;margin-left:-512px;">
 		<div style=padding-top:170px;padding-left:180px>
-		 <form action="{:U("Public/checkLogin")}" method="post" name="form1">
+		 <form action="<?php echo U("Public/checkLogin");?>" method="post" name="form1">
 			<table style="margin-left:430px;margin-top:60px;">
 				<tr height='90'>
 					<!-- <td >

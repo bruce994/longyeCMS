@@ -17,7 +17,7 @@ $(function () {
   var salesChart = new Chart(salesChartCanvas);
 
   var salesChartData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["January111", "February", "March", "April", "May", "June", "July111"],
     datasets: [
       {
         label: "Electronics",
@@ -96,40 +96,40 @@ $(function () {
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [
     {
-      value: 700,
+      value: 1111,
       color: "#f56954",
       highlight: "#f56954",
-      label: "Chrome"
+      label: "谷物"
     },
     {
-      value: 500,
+      value: 20%,
       color: "#00a65a",
       highlight: "#00a65a",
-      label: "IE"
+      label: "稻谷"
     },
     {
-      value: 400,
+      value: 15%,
       color: "#f39c12",
       highlight: "#f39c12",
-      label: "FireFox"
+      label: "玉米"
     },
     {
-      value: 600,
+      value: 20%,
       color: "#00c0ef",
       highlight: "#00c0ef",
-      label: "Safari"
+      label: "谷子"
     },
     {
-      value: 300,
+      value: 15%,
       color: "#3c8dbc",
       highlight: "#3c8dbc",
-      label: "Opera"
+      label: "高粱"
     },
     {
-      value: 100,
+      value: 5%,
       color: "#d2d6de",
       highlight: "#d2d6de",
-      label: "Navigator"
+      label: "其他谷物"
     }
   ];
   var pieOptions = {
