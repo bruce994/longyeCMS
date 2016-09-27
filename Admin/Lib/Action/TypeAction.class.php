@@ -782,8 +782,8 @@ public function article_insert_auto(){
 			    foreach ($Reader as $Row)
 			    {
 			    	$data = array();
-				    ++$j;
-			    	if($j == 0) continue;
+				    $j++;
+			    	if($j == 1) continue;
 			    	$i = 1;
 					foreach ($channelField as $value) {
 						$data[$value['fieldname']] = $Row[$i];	
@@ -798,6 +798,7 @@ public function article_insert_auto(){
 
 					$model->add($data);
 			    }
+
                 $this->success('数据导入完成，跳入客户管理页面！');
             }
 
