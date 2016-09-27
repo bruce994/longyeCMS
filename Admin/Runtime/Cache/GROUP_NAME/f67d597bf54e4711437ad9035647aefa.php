@@ -563,10 +563,45 @@ function checked_city<?php echo $field['id'];?>(){
                      </a>
                    </div>
 
+                   <div style="float:left;margin:0 8px;">
+                      <a href="javascript:void(0);"  class="btn btn-block btn-default btn-sm" data-toggle="modal" data-target="#myModalImport" > <i class="fa fa-fw fa-upload"></i>
+                       导入数据
+                     </a>
+                   </div>  
+
+                 <!--area-->
+                  <div id="myModalImport" class="modal fade" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-sm" role="document" style="width:15%;">
+                          <form class="form-horizontal" action="<?php echo U("Type/importData");?>" method="post" enctype="multipart/form-data">
+                            <div class="modal-content">
+                                <div class="modal-body" style="text-align:center;">
+                                  <div class="row">
+                                    <div class="col-md-12" id="ryynetAreaImport">
+                                         <div class="control-group">
+                                              <label class="control-label" for="file1">上传excel文件：</label>
+                                              <div class="controls">
+                                                  <input type="file" id="file1" name="file1"/>
+                                                  <input type="hidden" name="channel" value="<?php echo $_GET['channel'];?>"  />
+                                              </div>
+                                          </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-primary">确定</button>
+                                </div>
+                            </div>
+                          </form>
+                      </div>
+                  </div>
+
+
+
+
+
+
                 </div><!-- /.box-header -->
-
-
-
 
 
 

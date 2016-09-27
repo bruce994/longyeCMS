@@ -749,8 +749,68 @@ public function article_insert_auto(){
 	}
 
 
+
+
+        //数据导入
+        public function importData() {
+			ini_set('memory_limit', '-1');
+
+
+            import('ORG.Net.UploadFile');
+            $upload = new UploadFile();// 实例化上传类
+            $upload->maxSize  = 3145728 ;// 设置附件上传大小
+            $upload->allowExts  = array('xls',"xlsx");// 设置附件上传类型
+            $upload->savePath =  './Public/Uploads/';// 设置附件上传目录
+            if(!$upload->upload()) {// 上传错误提示错误信息
+                $this->error($upload->getErrorMsg());
+            }else{// 上传成功 获取上传文件信息
+                $info =  $upload->getUploadFileInfo();
+                $info = $info[0];
+                //$file_handle = fopen($info['savepath'] . $info['savename'],'r');
+                //dump($info['savepath'] . $info['savename']);exit;
+	            require_once (dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/php-excel-reader/excel_reader2.php");
+			    require(dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/SpreadsheetReader.php");	
+				$Reader = new SpreadsheetReader($info['savepath'] . $info['savename']);
+
+			    
+
+			    $channelField = M("Channelfield")->where("chid=".$_POST["channel"])->order("sort")->select();
+			    $model = M ("Addon".$_POST["channel"] );
+
+			    $ip = get_client_ip();
+			    $j=0;
+			    foreach ($Reader as $Row)
+			    {
+			    	$data = array();
+				    ++$j;
+			    	if($j == 0) continue;
+			    	$i = 1;
+					foreach ($channelField as $value) {
+						$data[$value['fieldname']] = $Row[$i];	
+						$i++;
+					}
+
+					$data['userid'] = $_SESSION["admin"]['userid'];
+					$data['areaID'] = $_SESSION["admin"]['areaID'];
+					$data['addtime'] = time();
+					$data['channel'] = $_POST["channel"];
+					$data['userip'] = $ip;
+
+					$model->add($data);
+			    }
+                $this->success('数据导入完成，跳入客户管理页面！');
+            }
+
+        }
+
+
+
+
+
 	//数据导出
         public function exportData() {
+
+				ini_set('memory_limit', '-1');
 
 				 //用品领用查询
 				 if($_GET['mType'] == "goods"){
@@ -876,13 +936,28 @@ public function article_insert_auto(){
 		   //END
 
 
-
+		   	/*
             require_once (dirname(__FILE__)."/../../../Public/excel/php-excel.class.php");
             $xls = new Excel_XML('UTF-8', false, 'data');
             $xls->addArray($data);
-
             $xls->generateXML($_GET['channel']);
-            //toexcel($list);
+			*/
+
+
+
+			require_once (dirname(__FILE__)."/../../../Public/excel/Classes/PHPExcel.php");
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->setActiveSheetIndex(0);
+			$objPHPExcel->getActiveSheet()->fromArray($data);
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="'.$_GET['channel'].'.xls"');
+			header('Cache-Control: max-age=0');
+
+			// Do your stuff here
+			$writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$writer->save('php://output');
+			exit;
+
         }
 
 
