@@ -9,7 +9,7 @@
   	  		  $map['areaID'] = array ('in', explode ( ',', $areas ) );
 		  }
 
-	}	
+	}
 
      public function index(){
 				Cookie::set ( '_currentUrl_', __SELF__ );
@@ -117,7 +117,7 @@ public function delete() {
 							  	  $areas = $_GET[$v['fieldname']].",".trim(getIdEnumAll($_GET[$v['fieldname']]),",");
 			  	    	  		  $map[$v['fieldname']] = array ('in', explode ( ',', $areas ) );
 								}else{
-									$map[$v['fieldname']] = array('eq',$_GET[$v['fieldname']]);									
+									$map[$v['fieldname']] = array('eq',$_GET[$v['fieldname']]);
 								}
 
 							}
@@ -749,11 +749,9 @@ public function article_insert_auto(){
 	}
 
 
-
-
         //数据导入
         public function importData() {
-			ini_set('memory_limit', '-1');
+            ini_set('memory_limit', '-1');
 
 
             import('ORG.Net.UploadFile');
@@ -768,41 +766,62 @@ public function article_insert_auto(){
                 $info = $info[0];
                 //$file_handle = fopen($info['savepath'] . $info['savename'],'r');
                 //dump($info['savepath'] . $info['savename']);exit;
-	            require_once (dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/php-excel-reader/excel_reader2.php");
-			    require(dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/SpreadsheetReader.php");	
-				$Reader = new SpreadsheetReader($info['savepath'] . $info['savename']);
+                require_once (dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/php-excel-reader/excel_reader2.php");
+                require(dirname(__FILE__)."/../../../Public/excel/spreadsheet-reader-master/SpreadsheetReader.php");
+                $Reader = new SpreadsheetReader($info['savepath'] . $info['savename']);
 
-			    
 
-			    $channelField = M("Channelfield")->where("chid=".$_POST["channel"])->order("sort")->select();
-			    $model = M ("Addon".$_POST["channel"] );
 
-			    $ip = get_client_ip();
-			    $j=0;
-			    foreach ($Reader as $Row)
-			    {
-			    	$data = array();
-				    $j++;
-			    	if($j == 1) continue;
-			    	$i = 1;
-					foreach ($channelField as $value) {
-						$data[$value['fieldname']] = $Row[$i];	
-						$i++;
-					}
+                $channelField = M("Channelfield")->where("chid=".$_POST["channel"])->order("sort")->select();
+                $model = M ("Addon".$_POST["channel"] );
 
-					$data['userid'] = $_SESSION["admin"]['userid'];
-					$data['areaID'] = $_SESSION["admin"]['areaID'];
-					$data['addtime'] = time();
-					$data['channel'] = $_POST["channel"];
-					$data['userip'] = $ip;
+                $ip = get_client_ip();
+                $j=0;
+                foreach ($Reader as $Row)
+                {
+                    $data = array();
+                    $j++;
+                    if($j == 1) continue;
+                    $i = 1;
+                    foreach ($channelField as $value) {
+                        //联动
+                        if($value['isLink'] == "1" && $value['isLinkType'] == "nativeplace"){
+                            $tmp = explode(',', $Row[$i]);
+                            $tmp = $tmp[count($tmp)-1];
 
-					$model->add($data);
-			    }
+                            $enum = F('nativeplace_array');
+                            if(empty($enum)){
+                              $enum = M("Sys_enum")->where("egroup='nativeplace'")->order("disorder")->select();
+                              F('nativeplace_array',$enum);
+                            }
+                            foreach ($enum as $vv) {
+                                if($vv["ename"] == $tmp){
+                                    $data[$value['fieldname']] = $vv["id"];
+                                    continue;
+                                }
+                            }
+                        }else{
+                            $data[$value['fieldname']] = $Row[$i];
+                        }
+                        $i++;
+                    }
+
+                    $data['userid'] = $_SESSION["admin"]['userid'];
+                    $data['areaID'] = $_SESSION["admin"]['areaID'];
+                    $data['addtime'] = time();
+                    $data['channel'] = $_POST["channel"];
+                    $data['userip'] = $ip;
+
+                    $model->add($data);
+                }
+
 
                 $this->success('数据导入完成，跳入客户管理页面！');
             }
 
         }
+
+
 
 
 
@@ -910,7 +929,7 @@ public function article_insert_auto(){
 				foreach ($channelField as $value) {
 					//联动
 					if($value['isLink'] == "1" && $value['isLinkType'] == "nativeplace"){
-						$tmp1[$value['fieldname']] = getEnum22($v[$value['fieldname']]);
+						$tmp1[$value['fieldname']] = getEnum22($v[$value['fieldname']],",");
 					}else{
 						$tmp1[$value['fieldname']] = $v[$value['fieldname']];
 					}
@@ -918,9 +937,9 @@ public function article_insert_auto(){
                 $data[] = $tmp1;
             }
 
-		    
-		    //统计  
-		    $isCount = false;           
+
+		    //统计
+		    $isCount = false;
 	        $list1[]="总计";
 			foreach ($channelField as $value) {
 				if($value['isCount'] == 1){
@@ -928,7 +947,7 @@ public function article_insert_auto(){
                     $list1[] = M("Addon".$value['chid'])->sum($value['fieldname']);
 				}
 				else{
-					$list1[] = '';							
+					$list1[] = '';
 				}
 			}
 		   if($isCount){

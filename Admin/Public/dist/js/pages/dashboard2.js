@@ -17,7 +17,7 @@ $(function () {
   var salesChart = new Chart(salesChartCanvas);
 
   var salesChartData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["2011", "2012", "2013", "2014", "2015", "2016", "2017"],
     datasets: [
       {
         label: "Electronics",
@@ -92,6 +92,7 @@ $(function () {
   //- PIE CHART -
   //-------------
   // Get context with jQuery - using jQuery's .get() method.
+  /*
   var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [
@@ -158,10 +159,15 @@ $(function () {
     //String - A tooltip template
     tooltipTemplate: "<%=value %> <%=label%> users"
   };
+
+
+
+
   //Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.
   pieChart.Doughnut(PieData, pieOptions);
   //-----------------
+*/
   //- END PIE CHART -
   //-----------------
 

@@ -9,9 +9,9 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/misc/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/misc/ionicons.min.css">
     <!-- Font Awesome -->
    
     <!-- jvectormap -->
@@ -74,7 +74,7 @@
             <small>Version 2.0</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li><a href="{:U("Main/index")}"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li class="active">Dashboard</li>
           </ol>
         </section>
@@ -133,19 +133,9 @@
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Monthly Recap Report</h3>
+                  <h3 class="box-title">粮食作物播种面积及产量报表</h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <div class="btn-group">
-                      <button class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                      </ul>
-                    </div>
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div><!-- /.box-header -->
@@ -216,9 +206,9 @@
                 <div class="box-body no-padding">
                   <div class="row">
                     <div class="col-md-9 col-sm-8">
-                      <div class="pad">
+                      <div class="pad" style="padding:0px;">
                         <!-- Map will be created here -->
-                        <div id="world-map-markers" style="height: 325px;"></div>
+                             <iframe id="ifupmap_map" src="/Admin/index.php/Public/map2/height/500/city/%E9%98%BF%E9%B2%81%E7%A7%91%E5%B0%94%E6%B2%81%E6%97%97%E5%A4%A9%E5%B1%B1%E9%95%87.html" frameborder="0" scrolling="no" height="325" width="100%"></iframe>••
                       </div>
                     </div><!-- /.col -->
                     <div class="col-md-3 col-sm-4">
@@ -308,28 +298,6 @@
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
 
-              <div class="box box-default">
-                <div class="box-header with-border">
-                
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="chart-responsive">
-                        <canvas id="pieChart" height="150"></canvas>
-                      </div><!-- ./chart-responsive -->
-                    </div><!-- /.col -->
-                    <div class="col-md-4">
-                     
-                    </div><!-- /.col -->
-                  </div><!-- /.row -->
-                </div><!-- /.box-body -->
-                
-              </div><!-- /.box -->
 
               <!-- PRODUCT LIST -->
 
