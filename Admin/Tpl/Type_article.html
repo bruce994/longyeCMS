@@ -531,9 +531,10 @@ function checked_city<?php echo $field['id'];?>(){
                                       }
                                     ?>
 
+
+                                    <eq name="channel.target" value="0">
+
                                     <a href="javascript:void();" data-toggle="modal" data-target="#myModal{$vo.aid}"  class="btn btn-primary btn-xs" ><i class="fa fa-file-text"></i>详细查看</a>
-                              </td>
-                          </tr>
 
 <!--dialog-->
 <style>
@@ -614,7 +615,18 @@ le">详细内容</h4></div>
              </div>
          </div>
          <!--END dialog-->
+         </eq>
 
+       <eq name="channel.target" value="1">
+       <a href="{:U("Type/article_edit",array("id"=>$vo['aid'],"channel"=>$_GET['channel'],"template"=>"article_view"))}"  class="btn btn-primary btn-xs" ><i class="fa fa-file-text"></i>详细查看</a>
+        </eq>
+
+
+
+
+
+                              </td>
+                          </tr>
 
 
 

@@ -21,9 +21,10 @@
 		$model = M ( "Arctype" );
 		$id = $_REQUEST ["id"];
 		$vo = $model->where("id = ".$id)->find();
-		$this->assign ( 'vo', $vo );
-		$this->display ();
-	}
+        $this->assign ( 'vo', $vo );
+
+        $this->display ();
+    }
 
 	public function update(){
 			$P = D("Arctype");
@@ -210,6 +211,10 @@ public function delete() {
 					$this->display ('article_auto');
 					exit;
 			    }
+
+
+
+
 				$this->display ();
 
 	}
@@ -421,7 +426,12 @@ public function article_edit() {
 		$this->display ('article_edit_auto');
 		exit;
     }
-	$this->display ();
+    if($_GET['template']){
+        $this->display ($_GET['template']);
+        exit;
+    }
+
+    $this->display ();
 }
 
 
